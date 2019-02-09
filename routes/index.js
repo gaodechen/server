@@ -16,6 +16,8 @@ const auth = require('../controllers/auth')
 module.exports = app => {
 	// session
 	app.route('/session')
+		// 获取session
+		.get(session.getSession)
 		// 登陆
 		.post(session.verifySessionNull, session.verifyValuesNotNull, auth.verifyPassword, session.postSession)
 		// 登出

@@ -39,6 +39,15 @@ exports.postSession = (userInfo, req, res, next) => {
     responseClient(res, 200, '登录成功', userInfo);
 }
 
+// get session
+exports.getSession = (req, res) => {
+    if(req.session) {
+        responseClient(res, 200, '获得session', req.session)
+    } else {
+        responseClient(res, 404, '无session')
+    }
+}
+
 // delete session, logout
 exports.deleteSession = (req, res) => {
     // delete session
