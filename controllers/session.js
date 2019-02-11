@@ -41,10 +41,10 @@ exports.postSession = (userInfo, req, res, next) => {
 
 // get session
 exports.getSession = (req, res) => {
-    if(req.session) {
-        responseClient(res, 200, '获得session', req.session)
+    if(req.session.userInfo) {
+        responseClient(res, 200, '认证成功', req.session.userInfo)
     } else {
-        responseClient(res, 404, '无session')
+        responseClient(res, 404, '认证失败')
     }
 }
 

@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 	// 允许请求携带cookie 
 	res.setHeader('Access-Control-Allow-Credentials', true);
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+	res.setHeader('Access-Control-Allow-Headers', 'Content-type, X-Requested-With');
 	next();
 });
 
