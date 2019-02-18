@@ -6,7 +6,10 @@ const autoIncrement = require('mongoose-auto-increment')
 const USER_TYPE = require('../constants')
 
 const userSchema = new mongoose.Schema({
-    username: { type: String, required: true },
+    username: {
+        type: String,
+        required: true
+    },
 
     password: {
         type: String,
@@ -23,14 +26,30 @@ const userSchema = new mongoose.Schema({
         validate: /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/
     },
 
+    // 用户类型
     type: {
         type: Number,
         required: true,
         default: USER_TYPE.USER
-    }
+    },
 
+    // 关注的用户ID
+    following: {
+        type: Array,
+    },
+
+    // 粉丝
+    followers: {
+        type: Array,
+    },
+
+    // 喜好风格标签
+    styleLabel: {
+        type: Array,
+    },
 })
 
+// ID自增插件
 userSchema.plugin(autoIncrement.plugin, {
     model: 'User',
     field: 'id',

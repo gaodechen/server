@@ -2,7 +2,7 @@ const User = require('../models/user');
 const { encode, responseClient } = require('../util/util')
 const { USER_TYPE } = require('../constants')
 
-exports.verifyValuesNotNull = (req, res, next) => {
+exports.isValuesNotNull = (req, res, next) => {
     let { email, username, password } = req.body;
     if (!email) {
         responseClient(res, 401, '用户邮箱不可为空');
@@ -19,6 +19,22 @@ exports.verifyValuesNotNull = (req, res, next) => {
     next();
 }
 
+exports.getUser = (req, res) => {
+    // 根据params进行查询
+    let { _id } = req.query;
+    User.findOne({ _id })
+        .then(data => {
+            if (data) {
+                responseClient(res, 200, '查询成功', data)
+            } else {
+                responseClient(res, 404, '查询失败')
+            }
+        })
+        .catch(err => {
+            responseClient(res, 400, '查询失败', err)
+        })
+}
+
 exports.postUser = (req, res) => {
     let { email, username, password } = req.body;
     //验证用户是否已经在数据库中
@@ -28,7 +44,9 @@ exports.postUser = (req, res) => {
                 responseClient(res, 401, '用户邮箱已存在！');
                 return;
             }
-            let user = new User({ email, username, password: encode(password), type: USER_TYPE.USER });
+            let user = new User({
+                email, username, password: encode(password), type: USER_TYPE.USER
+            });
             // 尝试插入数据库
             user.save()
                 .then(data => {
