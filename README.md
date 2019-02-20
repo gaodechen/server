@@ -1,13 +1,13 @@
 # Resume
 
 ```
-	app.route('/session')
-		// 获取session
-		.get(session.getSession)
-		// 登陆
-		.post(session.isNull, session.isValuesNotNull, auth.isPasswordCorrect, session.postSession)
-		// 登出
-		.delete(session.isNotNull, session.deleteSession)
+app.route('/session')
+	// 获取session
+	.get(session.getSession)
+	// 登陆
+	.post(session.isNull, session.isValuesNotNull, auth.isPasswordCorrect, session.postSession)
+	// 登出
+	.delete(session.isNotNull, session.deleteSession)
 ```
 
 ## imports
