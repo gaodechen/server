@@ -114,7 +114,7 @@ exports.putUser = (req, res) => {
         })
 }
 
-exports.getUserList = (req, res) => {
+/* exports.getUserList = (req, res) => {
     let keyword = req.query.keyword || '';
     let pageNum = parseInt(req.query.pageNum) || 1;
     let pageSize = parseInt(req.query.pageSize) || 10;
@@ -161,4 +161,4 @@ exports.getUserList = (req, res) => {
             });
         }
     });
-};
+}; */

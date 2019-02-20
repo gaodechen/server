@@ -1,4 +1,46 @@
+# Resume
 
+```
+	app.route('/session')
+		// 获取session
+		.get(session.getSession)
+		// 登陆
+		.post(session.isNull, session.isValuesNotNull, auth.isPasswordCorrect, session.postSession)
+		// 登出
+		.delete(session.isNotNull, session.deleteSession)
+```
+
+## imports
+
++ express以及各种中间件
++ mongodb & mongoose
++ ...
+
+## install & run
+
+```
+cnpm install
+node-dev ./bin/www
+(npm start)
+```
+
+## Structure
+
+    bin
+        www                                     服务器入口
+    config                                      服务器配置
+    constants                                   常量
+    controllers                                 控制器
+        auth                                    用于身份验证的中间件
+        follow                                  Following & Followers
+        music                                   乐曲管理
+        session                                 session管理，登陆态
+        user                                    用户管理
+    models                                      MongoDB schema定义
+    public                                      公共资源
+    routes                                      路由
+    util                                        工具API
+    app.js                                      express server
 
 一、状态码家族
 

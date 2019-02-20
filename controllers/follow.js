@@ -1,15 +1,29 @@
+const mongoose = require('mongoose')
 const User = require('../models/user');
 const { responseClient } = require('../util/util')
 
+// schema当中存储id，查询时返回对应id的附加fields
 exports.getFollow = (listName) => (req, res) => {
     let { _id } = req.query;
     User.findOne({ _id })
-        .then(data => {
-            if (data) {
-                responseClient(res, 200, '返回following列表', data.following);
+        .then(userInfo => {
+            if (userInfo) {
+                // 获取_id之外的fields
+                let list = userInfo[listName];
+                // 获取ObjectID list
+                let idList = list.map(item => (
+                    new mongoose.Types.ObjectId(item)
+                ));
+                // list当中的元素一起查询获取array
+                User.find({ _id: { $in: idList } })
+                // array中所有结果的promsie.resolve
+                    .then(infoList => {
+                        responseClient(res, 200, '返回' + listName + '列表', infoList.map(item => (
+                            { _id: item._id, username: item.username }
+                        )));
+                    })
             } else {
                 responseClient(res, 404, '用户不存在')
-                return;
             }
         })
         .catch(err => {
@@ -24,11 +38,11 @@ exports.postFollow = (listName) => (req, res) => {
     User.findOneAndUpdate({ _id }, { $addToSet: { [listName]: followID } })
         .then(userInfo => {
             // _id用户存在
-            if(userInfo) {
+            if (userInfo) {
                 let field = userInfo[listName];
                 console.log(field)
                 // followID用户不存在
-                if(field.indexOf(followID) === -1) {
+                if (field.indexOf(followID) === -1) {
                     field.push(followID)
                     responseClient(res, 200, '添加成功', field)
                 } else {
@@ -46,7 +60,7 @@ exports.postFollow = (listName) => (req, res) => {
 exports.deleteFollow = (listName) => (req, res) => {
     let { _id, followID } = req.body;
     // 更新User[_id]的列表字段
-    User.findOneAndUpdate({ _id }, { $pull: { [listName]: followID } })
+    User.findOneAndUpdate({ _id }, { $pull: { [listName]: { followID } } })
         // _id用户存在
         .then(userInfo => {
             // followID用户存在
