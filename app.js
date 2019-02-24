@@ -5,7 +5,13 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 
+// initialize mongodb and redis
+require('./lib/redis');
+require('./lib/mongodb');
+
 const app = express();
+
+// data server
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,10 +41,6 @@ app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Headers', 'Content-type, X-Requested-With');
 	next();
 });
-
-// data server
-const mongodb = require('./models/mongodb');
-mongodb.connect();
 
 // router
 const route = require('./routes/');

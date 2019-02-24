@@ -20,7 +20,7 @@ exports.isNotNull = (req, res, next) => {
 }
 
 // is email and password for login
-exports.isValuesNotNull = (req, res, next) => {
+exports.isNotNull = (req, res, next) => {
     let { email, password } = req.body;
     if (!email) {
         responseClient(res, 401, '用户邮箱不可为空')
@@ -34,13 +34,13 @@ exports.isValuesNotNull = (req, res, next) => {
 }
 
 // post session, login
-exports.postSession = (userInfo, req, res, next) => {
+exports.post = (userInfo, req, res, next) => {
     req.session.userInfo = userInfo;
     responseClient(res, 200, '登录成功', userInfo);
 }
 
 // get session
-exports.getSession = (req, res) => {
+exports.get = (req, res) => {
     if(req.session.userInfo) {
         responseClient(res, 200, '认证成功', req.session.userInfo)
     } else {
@@ -49,7 +49,7 @@ exports.getSession = (req, res) => {
 }
 
 // delete session, logout
-exports.deleteSession = (req, res) => {
+exports.del = (req, res) => {
     // delete session
     req.session.userInfo = null;
     responseClient(res, 200, '登出成功！');

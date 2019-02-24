@@ -3,7 +3,7 @@ const User = require('../models/user');
 const { responseClient } = require('../util/util')
 
 // schema当中存储id，查询时返回对应id的附加fields
-exports.getFollow = (listName) => (req, res) => {
+exports.get = (listName) => (req, res) => {
     let { _id } = req.query;
     User.findOne({ _id })
         .then(userInfo => {
@@ -32,7 +32,7 @@ exports.getFollow = (listName) => (req, res) => {
 }
 
 // 为_id的listName添加元素
-exports.postFollow = (listName) => (req, res) => {
+exports.post = (listName) => (req, res) => {
     let { _id, followID } = req.body;
     // addToSet去重
     User.findOneAndUpdate({ _id }, { $addToSet: { [listName]: followID } })
@@ -56,7 +56,7 @@ exports.postFollow = (listName) => (req, res) => {
         });
 };
 
-exports.deleteFollow = (listName) => (req, res) => {
+exports.del = (listName) => (req, res) => {
     let { _id, followID } = req.body;
     // 更新User[_id]的列表字段
     User.findOneAndUpdate({ _id }, { $pull: { [listName]: followID } })

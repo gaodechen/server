@@ -20,6 +20,7 @@
     "mongoose": "^5.4.6",
     "mongoose-auto-increment": "^5.0.1",
     "morgan": "^1.9.1",
+    "raccoon": "^0.2.8",
     "yargs": "^12.0.5"
   }
 }

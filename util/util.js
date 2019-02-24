@@ -56,6 +56,6 @@ module.exports = {
     encode,
     responseClient,
     timestampToTime,
-    normalizePort
+    normalizePort,
 };
 

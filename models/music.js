@@ -1,4 +1,4 @@
-const { mongoose } = require('./mongodb')
+const { mongoose } = require('../lib/mongodb')
 const autoIncrement = require('mongoose-auto-increment')
 
 const musicSchema = new mongoose.Schema({

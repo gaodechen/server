@@ -2,7 +2,7 @@ const Article = require('../models/article');
 const User = require('../models/user')
 const { responseClient } = require('../util/util')
 
-exports.postArticle = (req, res) => {
+exports.post = (req, res) => {
     let { title, content, authorID } = req.body;
     let article = new Article({ title, content, authorID });
 
@@ -30,7 +30,7 @@ exports.postArticle = (req, res) => {
         })
 }
 
-exports.deleteArticle = (req, res) => {
+exports.del = (req, res) => {
     let { _id } = req.body;
 
     Article.findOne({ _id })
@@ -61,7 +61,7 @@ exports.deleteArticle = (req, res) => {
         })
 }
 
-exports.putArticle = (req, res) => {
+exports.put = (req, res) => {
     // refresh the article with _id
     let { _id, title, content } = req.body;
     Article.findOneAndUpdate({ _id }, { title, content })
@@ -77,7 +77,7 @@ exports.putArticle = (req, res) => {
         })
 }
 
-exports.getArticle = (req, res) => {
+exports.get = (req, res) => {
     // 根据params进行查询
     let { _id } = req.query;
     Article.findOne({ _id })

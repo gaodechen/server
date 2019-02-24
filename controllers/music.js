@@ -1,7 +1,7 @@
 const Music = require('../models/music');
 const { responseClient } = require('../util/util')
 
-exports.postMusic = (req, res) => {
+exports.post = (req, res) => {
     let { musicName, musicSrc, imgSrc, styleLabel, imgLabel } = req.body;
     //验证用户是否已经在数据库中
     let user = new Music({ musicName, musicSrc, imgSrc, styleLabel, imgLabel });
@@ -15,7 +15,7 @@ exports.postMusic = (req, res) => {
         });
 };
 
-exports.deleteMusic = (req, res) => {
+exports.del = (req, res) => {
     // 删除给定_id的乐曲
     let { _id } = req.body;
     Music.deleteOne({ _id })
@@ -43,7 +43,7 @@ exports.putMusic = (req, res) => {
         })
 }
 
-exports.getMusic = (req, res) => {
+exports.get = (req, res) => {
     // 根据params进行查询
     let { _id } = req.query;
     Music.findOne({ _id })

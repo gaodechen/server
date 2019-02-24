@@ -1,4 +1,4 @@
-const { mongoose } = require('./mongodb')
+const { mongoose } = require('../lib/mongodb')
 
 const articleSchema = new mongoose.Schema({
     title: { type: String, required: true },

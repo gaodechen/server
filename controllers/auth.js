@@ -3,7 +3,7 @@ const { encode, responseClient } = require('../util/util')
 const { USER_TYPE } = require('../constants')
 
 // 数据库核对密码
-exports.isPasswordCorrect = (req, res, next) => {
+exports.isCorrect = (req, res, next) => {
     const { email, password } = req.body
     User.findOne({
         email
@@ -25,7 +25,7 @@ exports.isPasswordCorrect = (req, res, next) => {
 }
 
 // 验证是否admin
-exports.isAdminAuth = (req, res, next) => {
+exports.isAdmin = (req, res, next) => {
     if (req.session.userInfo.type != USER_TYPE.ADMIN) {
         responseClient(res, 403, '用户没有权限');
     } else {
@@ -34,7 +34,7 @@ exports.isAdminAuth = (req, res, next) => {
 }
 
 // 验证是否admin或者用户自身
-exports.isSelfAuth = (req, res, next) => {
+exports.isSelf = (req, res, next) => {
     const { type, email } = req.session.userInfo;
     if (type != USER_TYPE.ADMIN && email != req.body.email) {
         responseClient(res, 403, '用户没有权限');

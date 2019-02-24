@@ -2,7 +2,7 @@ const User = require('../models/user');
 const { encode, responseClient } = require('../util/util')
 const { USER_TYPE } = require('../constants')
 
-exports.isValuesNotNull = (req, res, next) => {
+exports.isNotNull = (req, res, next) => {
     let { email, username, password } = req.body;
     if (!email) {
         responseClient(res, 401, '用户邮箱不可为空');
@@ -19,7 +19,7 @@ exports.isValuesNotNull = (req, res, next) => {
     next();
 }
 
-exports.getUser = (req, res) => {
+exports.get = (req, res) => {
     // 根据params进行查询
     let { _id } = req.query;
     User.findOne({ _id })
@@ -35,7 +35,7 @@ exports.getUser = (req, res) => {
         })
 }
 
-exports.postUser = (req, res) => {
+exports.post = (req, res) => {
     let { email, username, password } = req.body;
     //验证用户是否已经在数据库中
     User.findOne({ email: email })
@@ -62,7 +62,7 @@ exports.postUser = (req, res) => {
         });
 };
 
-exports.postAdmin = (req, res) => {
+exports.post = (req, res) => {
     let { email, username, password } = req.body;
     //验证用户是否已经在数据库中
     User.findOne({ email: email })
@@ -87,7 +87,7 @@ exports.postAdmin = (req, res) => {
         });
 };
 
-exports.deleteUser = (req, res) => {
+exports.del = (req, res) => {
     let { email } = req.body;
     User.deleteOne({ email })
         .then(result => {
@@ -102,7 +102,7 @@ exports.deleteUser = (req, res) => {
         });
 };
 
-exports.putUser = (req, res) => {
+exports.put = (req, res) => {
     // 给定email修改条目
     let { email, username, password } = req.body;
     User.findOneAndUpdate({ email }, { email, username, password })
@@ -114,7 +114,7 @@ exports.putUser = (req, res) => {
         })
 }
 
-/* exports.getUserList = (req, res) => {
+/* exports.getList = (req, res) => {
     let keyword = req.query.keyword || '';
     let pageNum = parseInt(req.query.pageNum) || 1;
     let pageSize = parseInt(req.query.pageSize) || 10;

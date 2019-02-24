@@ -1,6 +1,6 @@
 const crypto = require('crypto')
 const { argv } = require('yargs')
-const { mongoose } = require('./mongodb')
+const { mongoose } = require('../lib/mongodb')
 const autoIncrement = require('mongoose-auto-increment')
 
 const USER_TYPE = require('../constants')
