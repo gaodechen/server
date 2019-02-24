@@ -11,11 +11,7 @@ exports.postMusic = (req, res) => {
             responseClient(res, 200, '乐曲新建成功', data);
         })
         .catch(err => {
-            responseClient(res, 400, '乐曲插入失败', err)
-        })
-        .catch(err => {
             responseClient(res);
-            return;
         });
 };
 
@@ -37,7 +33,7 @@ exports.deleteMusic = (req, res) => {
 
 exports.putMusic = (req, res) => {
     // 更新给定_id的乐曲
-    let { musicName, musicSrc, imgSrc, styleLabel, imgLabel } = req.body;
+    let { _id, musicName, musicSrc, imgSrc, styleLabel, imgLabel } = req.body;
     Music.findOneAndUpdate({ _id }, { musicName, musicSrc, imgSrc, styleLabel, imgLabel })
         .then(result => {
             responseClient(res, 200, '修改成功')

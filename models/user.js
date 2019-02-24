@@ -43,6 +43,10 @@ const userSchema = new mongoose.Schema({
         type: Array,
     },
 
+    articles: {
+        type: Array,
+    },
+
     // 喜好风格标签
     styleLabel: {
         type: Array,

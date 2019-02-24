@@ -3,6 +3,7 @@ const session = require('../controllers/session')
 const auth = require('../controllers/auth')
 const music = require('../controllers/music')
 const follow = require('../controllers/follow')
+const article = require('../controllers/article')
 
 /**
  * RESTful API
@@ -27,7 +28,7 @@ module.exports = app => {
 		.post(session.isNull, session.isValuesNotNull, auth.isPasswordCorrect, session.postSession)
 		// 登出
 		.delete(session.isNotNull, session.deleteSession)
-	
+
 	// user
 	app.route('/user')
 		.get(session.isNotNull, auth.isSelfAuth, user.getUser)
@@ -55,8 +56,17 @@ module.exports = app => {
 		.post(follow.postFollow("following"))
 		.delete(follow.deleteFollow("following"))
 
+	// 粉丝管理
 	app.route('/followers')
 		.get(follow.getFollow("followers"))
 		.post(follow.postFollow("followers"))
 		.delete(follow.deleteFollow("followers"))
+
+	// 文章管理
+	app.route('/article')
+		.get(article.getArticle)
+		.post(article.postArticle)
+		.put(article.putArticle)
+		.delete(article.deleteArticle)
+
 };

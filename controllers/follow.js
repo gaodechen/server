@@ -16,7 +16,7 @@ exports.getFollow = (listName) => (req, res) => {
                 ));
                 // list当中的元素一起查询获取array
                 User.find({ _id: { $in: idList } })
-                // array中所有结果的promsie.resolve
+                    // array中所有结果的promsie.resolve
                     .then(infoList => {
                         responseClient(res, 200, '返回' + listName + '列表', infoList.map(item => (
                             { _id: item._id, username: item.username }
@@ -40,7 +40,6 @@ exports.postFollow = (listName) => (req, res) => {
             // _id用户存在
             if (userInfo) {
                 let field = userInfo[listName];
-                console.log(field)
                 // followID用户不存在
                 if (field.indexOf(followID) === -1) {
                     field.push(followID)
@@ -60,15 +59,19 @@ exports.postFollow = (listName) => (req, res) => {
 exports.deleteFollow = (listName) => (req, res) => {
     let { _id, followID } = req.body;
     // 更新User[_id]的列表字段
-    User.findOneAndUpdate({ _id }, { $pull: { [listName]: { followID } } })
+    User.findOneAndUpdate({ _id }, { $pull: { [listName]: followID } })
         // _id用户存在
         .then(userInfo => {
             // followID用户存在
-            let field = userInfo[listName];
-            if (userInfo && field.indexOf(followID) !== -1) {
-                responseClient(res, 200, '删除成功', field)
+            if (userInfo) {
+                let field = userInfo[listName];
+                if (field.indexOf(followID) !== -1) {
+                    responseClient(res, 200, '删除成功', field)
+                } else {
+                    responseClient(res, 404, '用户不存在')
+                }
             } else {
-                responseClient(res, 404, '用户不存在', field)
+                responseClient(res, 404, '用户不存在')
             }
         })
         .catch(err => {
