@@ -1,7 +1,6 @@
 const crypto = require('crypto')
 const { argv } = require('yargs')
 const { mongoose } = require('../lib/mongodb')
-const autoIncrement = require('mongoose-auto-increment')
 
 const USER_TYPE = require('../constants')
 
@@ -43,6 +42,7 @@ const userSchema = new mongoose.Schema({
         type: Array,
     },
 
+    // 文章
     articles: {
         type: Array,
     },
@@ -51,14 +51,17 @@ const userSchema = new mongoose.Schema({
     styleLabel: {
         type: Array,
     },
-})
 
-// ID自增插件
-userSchema.plugin(autoIncrement.plugin, {
-    model: 'User',
-    field: 'id',
-    startAt: 1,
-    incrementBy: 1
+    // 头像文件名称
+    avatar: {
+        type: String,
+        default: 'default_avatar.png'
+    },
+
+	// 创建日期
+	createTime: {
+        type: Date, default: Date.now
+    },
 })
 
 module.exports = mongoose.model('User', userSchema)

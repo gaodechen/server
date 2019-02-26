@@ -27,7 +27,7 @@ module.exports = app => {
 		// 获取session
 		.get(session.get)
 		// 登陆
-		.post(session.isNull, session.isNotNull, auth.isCorrect, session.post)
+		.post(session.isNull, session.isInfoNotNull, auth.isCorrect, session.post)
 		// 登出
 		.delete(session.isNotNull, session.del)
 

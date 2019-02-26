@@ -36,7 +36,7 @@ exports.get = (req, res) => {
 }
 
 exports.post = (req, res) => {
-    let { email, username, password } = req.body;
+    let { email, username, password, avatar } = req.body;
     //验证用户是否已经在数据库中
     User.findOne({ email: email })
         .then(data => {
@@ -45,7 +45,7 @@ exports.post = (req, res) => {
                 return;
             }
             let user = new User({
-                email, username, password: encode(password), type: USER_TYPE.USER
+                email, username, password: encode(password), type: USER_TYPE.USER, avatar
             });
             // 尝试插入数据库
             user.save()
@@ -63,7 +63,7 @@ exports.post = (req, res) => {
 };
 
 exports.post = (req, res) => {
-    let { email, username, password } = req.body;
+    let { email, username, password, avatar } = req.body;
     //验证用户是否已经在数据库中
     User.findOne({ email: email })
         .then(data => {
@@ -71,7 +71,7 @@ exports.post = (req, res) => {
                 responseClient(res, 401, '用户邮箱已存在！');
                 return;
             }
-            let user = new User({ email, username, password: encode(password), type: USER_TYPE.ADMIN });
+            let user = new User({ email, username, password: encode(password), type: USER_TYPE.ADMIN, avatar });
             // 尝试插入数据库
             user.save()
                 .then(data => {
@@ -104,8 +104,8 @@ exports.del = (req, res) => {
 
 exports.put = (req, res) => {
     // 给定email修改条目
-    let { email, username, password } = req.body;
-    User.findOneAndUpdate({ email }, { email, username, password })
+    let { email, username, password, avatar } = req.body;
+    User.findOneAndUpdate({ email }, { username, password, avatar })
         .then(result => {
             responseClient(res, 200, '修改成功')
         })

@@ -20,7 +20,7 @@ exports.isNotNull = (req, res, next) => {
 }
 
 // is email and password for login
-exports.isNotNull = (req, res, next) => {
+exports.isInfoNotNull = (req, res, next) => {
     let { email, password } = req.body;
     if (!email) {
         responseClient(res, 401, '用户邮箱不可为空')
