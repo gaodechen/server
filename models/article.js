@@ -10,6 +10,11 @@ const articleSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+
+    // 更新时间
+	updateTime: {
+        type: Date, default: Date.now
+    },
 })
 
 module.exports = mongoose.model('Article', articleSchema)

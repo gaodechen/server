@@ -42,12 +42,22 @@ const userSchema = new mongoose.Schema({
         type: Array,
     },
 
+    // 歌曲_id收藏
+    collections: {
+        type: Array,
+    },
+
     // 文章
     articles: {
         type: Array,
     },
 
     // 喜好风格标签
+    styleLabel: {
+        type: Array,
+    },
+
+    // 情感偏向标签
     styleLabel: {
         type: Array,
     },
@@ -60,6 +70,11 @@ const userSchema = new mongoose.Schema({
 
 	// 创建日期
 	createTime: {
+        type: Date, default: Date.now
+    },
+
+    // 最后更新时间
+	udpateTime: {
         type: Date, default: Date.now
     },
 })

@@ -16,7 +16,17 @@ const musicSchema = new mongoose.Schema({
 
     // 高潮开始时间/持续时间
     climaxAt: { type: String },
-    climaxTime: { type: Number }
+    climaxTime: { type: Number },
+
+	// 创建日期
+	createTime: {
+        type: Date, default: Date.now
+    },
+
+    // 更新日期
+	updateTime: {
+        type: Date, default: Date.now
+    },
 })
 
 module.exports = mongoose.model('Music', musicSchema)

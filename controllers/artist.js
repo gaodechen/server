@@ -1,15 +1,11 @@
-const Album = require('../models/album');
+const artist = require('../models/artist');
 const { encode, responseClient } = require('../util/util')
-const { AUTHOR_TYPE } = require('../constants')
+const { USER_TYPE } = require('../constants')
 
 exports.isNotNull = (req, res, next) => {
-    let { title, songList } = req.body;
-    if (!title) {
-        responseClient(res, 401, '专辑名不能为空！');
-        return;
-    }
-    if (!songList) {
-        responseClient(res, 401, '歌曲列表不能为空！');
+    let { artistName } = req.body;
+    if (!artistName) {
+        responseClient(res, 401, '名称不可为空');
         return;
     }
     next();
@@ -18,7 +14,7 @@ exports.isNotNull = (req, res, next) => {
 exports.get = (req, res) => {
     // 根据params进行查询
     let { _id } = req.query;
-    Album.findOne({ _id })
+    artist.findOne({ _id })
         .then(data => {
             if (data) {
                 responseClient(res, 200, '查询成功', data)
@@ -32,14 +28,15 @@ exports.get = (req, res) => {
 }
 
 exports.post = (req, res) => {
-    let { title, songList, } = req.body;
-    let album = new Album({
-        title, songList, styleLabel, emotionLabel, authorType, authorID
+    let { artistName, styleLabel, emotionLable, avatar } = req.body;
+    //验证用户是否已经在数据库中
+    let artist = new artist({
+        email, artistName, password: encode(password), type: USER_TYPE.USER, avatar
     });
     // 尝试插入数据库
-    album.save()
+    artist.save()
         .then(data => {
-            responseClient(res, 200, '插入成功', data);
+            responseClient(res, 200, '添加成功', data);
         })
         .catch(err => {
             responseClient(res);
@@ -49,12 +46,12 @@ exports.post = (req, res) => {
 
 exports.del = (req, res) => {
     let { _id } = req.body;
-    Album.deleteOne({ _id })
+    artist.deleteOne({ _id })
         .then(result => {
             if (result.n === 1) {
                 responseClient(res, 200, '删除成功');
             } else {
-                responseClient(res, 404, '专辑不存在');
+                responseClient(res, 404, '艺术家不存在');
             }
         })
         .catch(err => {
@@ -63,9 +60,9 @@ exports.del = (req, res) => {
 };
 
 exports.put = (req, res) => {
-    // 修改条目
-    let { _id, title, songList, styleLabel, emotionLabel, authorType, authorID } = req.body;
-    Album.findOneAndUpdate({ _id }, { title, songList, styleLabel, emotionLabel, authorType, authorID })
+    // 给定_id修改条目
+    let { _id, artistName, styleLabel, emotionLabel, avatar } = req.body;
+    artist.findOneAndUpdate({ _id }, { artistName, styleLabel, emotionLabel, avatar })
         .then(result => {
             responseClient(res, 200, '修改成功')
         })

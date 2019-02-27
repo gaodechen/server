@@ -62,31 +62,6 @@ exports.post = (req, res) => {
         });
 };
 
-exports.post = (req, res) => {
-    let { email, username, password, avatar } = req.body;
-    //验证用户是否已经在数据库中
-    User.findOne({ email: email })
-        .then(data => {
-            if (data) {
-                responseClient(res, 401, '用户邮箱已存在！');
-                return;
-            }
-            let user = new User({ email, username, password: encode(password), type: USER_TYPE.ADMIN, avatar });
-            // 尝试插入数据库
-            user.save()
-                .then(data => {
-                    responseClient(res, 200, '注册成功', data);
-                })
-                .catch(err => {
-                    responseClient(res, 401, '注册失败，请检查输入信息', err)
-                })
-        })
-        .catch(err => {
-            responseClient(res);
-            return;
-        });
-};
-
 exports.del = (req, res) => {
     let { email } = req.body;
     User.deleteOne({ email })

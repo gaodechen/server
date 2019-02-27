@@ -2,6 +2,16 @@ const mongoose = require('mongoose')
 const User = require('../models/user');
 const { responseClient } = require('../util/util')
 
+// 添加粉丝需要的权限
+exports.hasAuth = (req, res, next) => {
+    if(req.session.userInfo._id === req.body.followID) {
+        next();
+    } else {
+        responseClient(res, 403, '操作没有权限');
+        return;
+    }
+}
+
 // schema当中存储id，查询时返回对应id的附加fields
 exports.get = (listName) => (req, res) => {
     let { _id } = req.query;

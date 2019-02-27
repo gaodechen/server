@@ -41,11 +41,21 @@ module.exports = app => {
 		// admin更新用户
 		.put(session.isNotNull, auth.isSelf, user.put)
 
+	// 管理员
 	app.route('/admin')
 		// admin权限注册admin
 		.post(session.isNotNull, auth.isAdmin, user.post)
 		.put(session.isNotNull, auth.isAdmin, user.put)
 
+	// 艺术家
+	app.route('/user')
+		.get(session.isNotNull, auth.isSelf, user.get)
+		.post(user.isNotNull, user.post)
+		.delete(session.isNotNull, auth.isAdmin, user.del)
+		.put(session.isNotNull, auth.isSelf, user.put)
+
+
+	// 乐曲
 	app.route('/music')
 		// 获取音乐信息
 		.get(music.get)
@@ -53,16 +63,19 @@ module.exports = app => {
 		.post(session.isNotNull, music.post)
 		.delete(session.isNotNull, auth.isAdmin, music.del)
 
+	// 关注管理
 	app.route('/following')
 		.get(follow.get("following"))
-		.post(follow.post("following"))
-		.delete(follow.del("following"))
+		.post(session.isNotNull, auth.isSelf, follow.post("following"))
+		.delete(session.isNotNull, auth.isSelf, follow.del("following"))
 
 	// 粉丝管理
 	app.route('/followers')
 		.get(follow.get("followers"))
-		.post(follow.post("followers"))
-		.delete(follow.del("followers"))
+		// 添加粉丝需要关注者的权限
+		.post(session.isNotNull, follow.hasAuth, follow.post("followers"))
+		// 删除粉丝需要被关注者的权限
+		.delete(session.isNotNull, auth.isSelf, follow.del("followers"))
 
 	// 文章管理
 	app.route('/article')
@@ -71,13 +84,14 @@ module.exports = app => {
 		.put(session.isNotNull, auth.isSelf, article.put)
 		.delete(session.isNotNull, auth.isSelf, article.del)
 
-	// 推荐
+	// 推荐 Songs / Users
 	app.route('/recommend')
 		.get(recommender.get)
 	
 	// 用户收藏管理
 	app.route('/like')
 		.get(like.get)
-		.post(like.post)
+		.post(session.isNotNull, auth.isSelf, like.post)
+		.put(session.isNotNull, auth.isSelf, like.put)
 
 };
