@@ -77,18 +77,31 @@ exports.put = (req, res) => {
         })
 }
 
+// 获取单篇文章信息
 exports.get = (req, res) => {
     // 根据params进行查询
-    let { _id } = req.query;
-    Article.findOne({ _id })
-        .then(data => {
-            if (data) {
-                responseClient(res, 200, '查询成功', data)
-            } else {
-                responseClient(res, 404, '文章不存在')
-            }
-        })
-        .catch(err => {
-            responseClient(res, 400, '查询失败', err)
-        })
+    let { userID, _id } = req.query;
+    if (userID) {
+        // 获取userID的文章列表
+        User.findOne({ _id: userID })
+            .then(data => {
+                if (data) {
+                    responseClient(res, 200, '返回文章列表', data.articles)
+                } else {
+                    responseClient(res, 404, '用户不存在')
+                }
+            })
+    } else {
+        Article.findOne({ _id })
+            .then(data => {
+                if (data) {
+                    responseClient(res, 200, '查询成功', data)
+                } else {
+                    responseClient(res, 404, '文章不存在')
+                }
+            })
+            .catch(err => {
+                responseClient(res, 400, '查询失败', err)
+            })
+    }
 }
