@@ -5,6 +5,9 @@ const musicSchema = new mongoose.Schema({
 
     musicSrc: { type: String },
 
+    // 歌词
+    lyric: { type: String },
+
     // 封面图
     imgSrc: { type: String },
 

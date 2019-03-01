@@ -2,9 +2,9 @@ const Music = require('../models/music');
 const { responseClient } = require('../util/util')
 
 exports.post = (req, res) => {
-    let { musicName, musicSrc, imgSrc, styleLabel, imgLabel, climaxAt } = req.body;
+    let { musicName, musicSrc, imgSrc, lyric, styleLabel, imgLabel, climaxAt } = req.body;
     //验证用户是否已经在数据库中
-    let user = new Music({ musicName, musicSrc, imgSrc, styleLabel, imgLabel, climaxAt });
+    let user = new Music({ musicName, musicSrc, lyric, imgSrc, styleLabel, imgLabel, climaxAt });
     // 尝试插入数据库
     user.save()
         .then(data => {
@@ -33,8 +33,8 @@ exports.del = (req, res) => {
 
 exports.putMusic = (req, res) => {
     // 更新给定_id的乐曲
-    let { _id, musicName, musicSrc, imgSrc, styleLabel, imgLabel, climaxAt } = req.body;
-    Music.findOneAndUpdate({ _id }, { musicName, musicSrc, imgSrc, styleLabel, imgLabel, climaxAt })
+    let { _id, musicName, musicSrc, imgSrc, lyric, styleLabel, imgLabel, climaxAt, climaxTime } = req.body;
+    Music.findOneAndUpdate({ _id }, { musicName, musicSrc, imgSrc, lyric, styleLabel, imgLabel, climaxAt, climaxTime })
         .then(result => {
             responseClient(res, 200, '修改成功')
         })

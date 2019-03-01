@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-
     password: {
         type: String,
         required: true,
@@ -18,7 +17,6 @@ const userSchema = new mongoose.Schema({
             .update(argv.auth_default_password || 'root')
             .digest('hex')
     },
-
     email: {
         type: String,
         required: true,
@@ -31,52 +29,29 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: USER_TYPE.USER
     },
-
     // 关注的用户ID
-    following: {
-        type: Array,
-    },
-
-    // 粉丝
-    followers: {
-        type: Array,
-    },
-
+    following: { type: Array, },
+    // 粉丝ID
+    followers: { type: Array, },
     // 歌曲_id收藏
-    collections: {
-        type: Array,
-    },
-
+    collections: { type: Array, },
     // 文章
-    articles: {
-        type: Array,
-    },
-
+    articles: { type: Array, },
     // 喜好风格标签
-    styleLabel: {
-        type: Array,
-    },
-
+    styleLabel: { type: Array, },
     // 情感偏向标签
-    styleLabel: {
-        type: Array,
-    },
-
+    styleLabel: { type: Array, },
     // 头像文件名称
     avatar: {
         type: String,
         default: 'default_avatar.png'
     },
-
 	// 创建日期
 	createTime: {
         type: Date, default: Date.now
     },
-
     // 最后更新时间
-	udpateTime: {
-        type: Date, default: Date.now
-    },
+	udpateTime: { type: Date, default: Date.now },
 })
 
 module.exports = mongoose.model('User', userSchema)
