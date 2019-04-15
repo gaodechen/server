@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
     // 喜好风格标签
     styleLabel: { type: Array, },
     // 情感偏向标签
-    styleLabel: { type: Array, },
+    emotionLabel: { type: Array, },
     // 头像文件名称
     avatar: {
         type: String,

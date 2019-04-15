@@ -15,10 +15,10 @@ const like = require('../controllers/like')
  */
 
 /**
- * 400: 请求错误
- * 401：不给用户授权/登录失败
- * 403：用户缺少/无权限
- * 404：服务器缺少/无资源
+ * 400: request error
+ * 401：auth error / failed to login
+ * 403：no permission
+ * 404：no resource
  */
 
 module.exports = app => {

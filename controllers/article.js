@@ -1,6 +1,6 @@
 const Article = require('../models/article');
 const User = require('../models/user')
-const { responseClient } = require('../util/util')
+const { responseClient } = require('../utils/util')
 
 exports.post = (req, res) => {
     let { title, content, authorID } = req.body;
@@ -101,7 +101,7 @@ exports.get = (req, res) => {
                 }
             })
             .catch(err => {
-                responseClient(res, 400, '查询失败', err)
+                responseClient(res)
             })
     }
 }

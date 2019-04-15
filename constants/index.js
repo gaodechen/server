@@ -1,12 +1,21 @@
-// 用户类型
+// types of users
 exports.USER_TYPE = {
-    USER: 1,
-    ADMIN: 0,
+    USER: 'user',
+    ADMIN: 'admin',
 }
 
-// Album作者类型，用户创作 / 管理员添加 / 艺术家
-const authorType = {
-    USER: 'user',
-    SYSTEM: 'system',
-    ARTIST: 'artist'
+// HTTP codes
+exports.HTTP_CODE = {
+    SUCCESS: 200,
+    NOT_FOUND: 400,
+    REQUEST_FAILED: 401,
+    SERVER_ERROR: 500,
+}
+
+// HTTP messages
+exports.HTTP_MSG = {
+    SUCCESS: '请求成功',
+    NOT_FOUND: '查询失败',
+    REQUEST_FAILED: '请求失败',
+    SERVER_ERROR: '服务器错误',
 }

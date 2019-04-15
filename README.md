@@ -1,4 +1,12 @@
+# TODO
+
+高并发系统有三把利器：缓存、降级和限流
+
 # Resume
+
++ MVC
++ controllers负责与HTTP交互，参数检查，调用services
++ services负责实际的逻辑
 
 ## imports
 
@@ -10,7 +18,15 @@
 ## install & run
 
 ```
+nppm install
+or
 cnpm install
+```
+
+run Redis Server:
+
+```
+redis-server
 ```
 
 Hot-Loading:
@@ -35,6 +51,8 @@ npm start
         redis.js                                Redis配置以及接口
         recommender.js                          推荐系统配置以及接口
     constants                                   常量
+    services                                    实际逻辑
+        user.js                                 user管理逻辑
     controllers                                 控制器
         auth.js                                 用于身份验证的中间件
         follow.js                               Following & Followers

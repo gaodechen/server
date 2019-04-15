@@ -1,5 +1,7 @@
 const { argv } = require('yargs');
 
+exports.FRONT_SERVER = 'http://127.0.0.1:3001/'
+
 exports.PORT = process.env.PORT || '3000'
 
 // MongoDB 配置

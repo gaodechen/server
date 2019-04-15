@@ -1,9 +1,14 @@
+/*
+ * Main Application
+ */
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
+const config = require('./config/config')
 
 // initialize mongodb and redis
 require('./lib/redis');
@@ -11,13 +16,11 @@ require('./lib/mongodb');
 
 const app = express();
 
-// data server
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// middleware
+// middlewares
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,16 +29,19 @@ app.use(cookieParser('musicine_server_cookie'));
 app.use(
 	session({
 		secret: 'musicine_server_cookie',
-		name: 'session_id', //# 在浏览器中生成cookie的名称key，默认是connect.sid
+		// cookie key in browser
+		name: 'session_id',
 		resave: true,
 		saveUninitialized: true,
-		cookie: { maxAge: 60 * 1000 * 30, httpOnly: true }, //过期时间
+		// cookit time limit
+		cookie: { maxAge: 60 * 1000 * 30, httpOnly: true },
 	}),
 );
+
 app.use((req, res, next) => {
-	// 允许的请求主机名及端口号 也可以用通配符*， 表示允许所有主机请求
-	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001/');
-	// 允许请求携带cookie 
+	// allowed origin address & port
+	res.setHeader('Access-Control-Allow-Origin', config.FRONT_SERVER);
+	// allow request with cookie
 	res.setHeader('Access-Control-Allow-Credentials', true);
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
 	res.setHeader('Access-Control-Allow-Headers', 'Content-type, X-Requested-With');
@@ -43,8 +49,7 @@ app.use((req, res, next) => {
 });
 
 // router
-const route = require('./routes/');
-route(app);
+require('./routes/') (app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
