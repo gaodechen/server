@@ -1,5 +1,5 @@
 const recommender = require('../lib/recommender')
-const { responseClient } = require('../util/util')
+const { responseClient } = require('../utils')
 
 // _id: 为用户_id进行乐曲推荐
 // _recNum: 推荐乐曲的数量

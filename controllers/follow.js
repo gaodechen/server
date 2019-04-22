@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const User = require('../models/user');
-const { responseClient } = require('../util/util')
+const { responseClient } = require('../utils')
 
 // 添加粉丝需要的权限
 exports.hasAuth = (req, res, next) => {

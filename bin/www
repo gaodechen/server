@@ -4,7 +4,7 @@ const app = require('../app');
 const debug = require('debug')('musicine:server');
 const http = require('http');
 const config = require('../config/config')
-const { normalizePort } =  require('../util/util')
+const { normalizePort } =  require('../utils')
 
 /**
  * Create server and listen

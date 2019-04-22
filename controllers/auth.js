@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const { encode, responseClient } = require('../util/util')
+const { encode, responseClient } = require('../utils')
 const { USER_TYPE } = require('../constants')
 
 // 数据库核对密码

@@ -1,6 +1,6 @@
 const Article = require('../models/article');
 const User = require('../models/user')
-const { responseClient } = require('../utils/util')
+const { responseClient } = require('../utils')
 
 exports.post = (req, res) => {
     let { title, content, authorID } = req.body;

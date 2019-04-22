@@ -1,6 +1,6 @@
 const recommender = require('../lib/recommender')
 const User = require('../models/user')
-const { responseClient } = require('../util/util')
+const { responseClient } = require('../utils')
 
 exports.get = (req, res) => {
     const { _id } = req.query;

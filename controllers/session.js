@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const { encode, responseClient } = require('../util/util')
+const { encode, responseClient } = require('../utils')
 
 // needed session null
 exports.isNull = (req, res, next) => {

@@ -1,5 +1,5 @@
 const md5 = require('./md5');
-const response = require('./resposne');
+const response = require('./response');
 const utils = require('./utils');
 
 module.exports = {

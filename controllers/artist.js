@@ -1,5 +1,5 @@
 const artist = require('../models/artist');
-const { encode, responseClient } = require('../util/util')
+const { encode, responseClient } = require('../utils')
 const { USER_TYPE } = require('../constants')
 
 exports.isNotNull = (req, res, next) => {

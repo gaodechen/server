@@ -1,5 +1,5 @@
 const Music = require('../models/music');
-const { responseClient } = require('../util/util')
+const { responseClient } = require('../utils')
 
 exports.post = (req, res) => {
     let { musicName, musicSrc, imgSrc, lyric, styleLabel, imgLabel, climaxAt } = req.body;

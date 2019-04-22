@@ -1,5 +1,5 @@
 const Album = require('../models/album');
-const { encode, responseClient } = require('../util/util')
+const { encode, responseClient } = require('../utils')
 const { AUTHOR_TYPE } = require('../constants')
 
 exports.isNotNull = (req, res, next) => {
