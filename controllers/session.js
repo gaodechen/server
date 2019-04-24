@@ -1,56 +1,69 @@
-const User = require('../models/user');
-const { encode, responseClient } = require('../utils')
+const { responseClient } = require('../utils')
+const { HTTP_CODE, HTTP_MSG } = require('../constants')
 
-// needed session null
+/**
+ * @description: verify if session is null
+ */
 exports.isNull = (req, res, next) => {
     if (req.session.userInfo) {
-        responseClient(res, 400, '已经登陆');
+        // if already logged in
+        responseClient(res, HTTP_CODE.AUTH_ERROR, HTTP_MSG.AUTH_ERROR.LOGGED_IN);
         return;
     }
     next();
 }
 
-// needed seesion
+/**
+ * @description: check if session is not null
+ */
 exports.isNotNull = (req, res, next) => {
     if (!req.session.userInfo) {
-        responseClient(res, 401,  '尚未登陆');
+        responseClient(res, HTTP_CODE.AUTH_ERROR,  HTTP_MSG.AUTH_ERROR.NOT_LOGGED_IN);
         return;
     }
     next();
 }
 
-// is email and password for login
+/**
+ * @description: check if user information fields are not empty
+ */
 exports.isInfoNotNull = (req, res, next) => {
     let { email, password } = req.body;
     if (!email) {
-        responseClient(res, 401, '用户邮箱不可为空')
+        responseClient(res, HTTP_CODE.FIELDS_EMPTY, HTTP_MSG.FIELDS_EMPTY.EMAIL)
         return;
     }
     if (!password) {
-        responseClient(res, 401, '密码不可为空')
+        responseClient(res, HTTP_CODE.FIELDS_EMPTY, HTTP_MSG.FIELDS_EMPTY.PASSWORD)
         return;
     }
     next();
 }
 
-// post session, login
+/**
+ * @description: log in
+ */
 exports.post = (userInfo, req, res, next) => {
     req.session.userInfo = userInfo;
-    responseClient(res, 200, '登录成功', userInfo);
+    responseClient(res, HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.LOGIN, userInfo);
 }
 
-// get session
+/**
+ * @description: get session
+ */
 exports.get = (req, res) => {
     if(req.session.userInfo) {
-        responseClient(res, 200, '认证成功', req.session.userInfo)
+        responseClient(res, HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.FOUND, req.session.userInfo)
     } else {
-        responseClient(res, 404, '认证失败')
+        responseClient(res, HTTP_CODE.NOT_FOUND, HTTP_MSG.NOT_FOUND)
     }
 }
 
-// delete session, logout
+/**
+ * @description: delete session
+ */
 exports.del = (req, res) => {
     // delete session
     req.session.userInfo = null;
-    responseClient(res, 200, '登出成功！');
+    responseClient(res, HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.DELETE);
 };

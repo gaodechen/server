@@ -17,8 +17,8 @@ const musicSchema = new mongoose.Schema({
     // 情感标签
     emotionLabel: { type: Array },
 
-    // 高潮开始时间/持续时间
     climaxAt: { type: String },
+
     climaxTime: { type: Number },
 
 	// 创建日期

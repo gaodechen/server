@@ -7,15 +7,49 @@ exports.USER_TYPE = {
 // HTTP codes
 exports.HTTP_CODE = {
     SUCCESS: 200,
-    NOT_FOUND: 400,
+
+    FIELDS_EMPTY: 401,
     REQUEST_FAILED: 401,
+
+    AUTH_ERROR: 403,
+
+    NOT_FOUND: 404,
+
     SERVER_ERROR: 500,
 }
 
 // HTTP messages
 exports.HTTP_MSG = {
-    SUCCESS: '请求成功',
-    NOT_FOUND: '查询失败',
-    REQUEST_FAILED: '请求失败',
+    SUCCESS: {
+        DELETE: '删除成功',
+        POST: '添加成功',
+        UPDATE: '更新成功',
+        LOGIN: '登陆成功',
+        LOGOUT: '注销成功',
+        FOUND: '查询成功',
+        DEFAULT: '请求成功',
+    },
+
+    FIELDS_EMPTY: {
+        EMAIL: '需要邮箱',
+        USERNAME: '需要用户名',
+        PASSWORD: '需要密码',
+        DEFAULT: '缺少字段',
+    },
+
+    REQUEST_FAILED: {
+        USERINFO_ERROR: '用户信息有误',
+        ALREADY_EXISTS: '已经存在',
+        DEFAULT: '请求失败',
+    },
+
+    AUTH_ERROR: {
+        LOGGED_IN: '用户已登录',
+        NOT_LOGGED_IN: '未登录',
+        NOT_AUTHED: '用户无权限',
+    },
+
+    NOT_FOUND: '无法查询到',
+
     SERVER_ERROR: '服务器错误',
 }

@@ -10,15 +10,7 @@ const like = require('../controllers/like')
 /**
  * RESTful API
  * 
- * #get: req.query
- * #post: req.body
- */
-
-/**
- * 400: request error
- * 401：auth error / failed to login
- * 403：no permission
- * 404：no resource
+ * @description: routes of node server
  */
 
 module.exports = app => {
@@ -27,7 +19,7 @@ module.exports = app => {
 		// 获取session
 		.get(session.get)
 		// 登陆
-		.post(session.isNull, session.isInfoNotNull, auth.isCorrect, session.post)
+		.post(session.isNull, session.isInfoNotNull, auth.verify, session.post)
 		// 登出
 		.delete(session.isNotNull, session.del)
 

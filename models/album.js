@@ -3,30 +3,19 @@ const { mongoose } = require('../lib/mongodb')
 const albumSchema = new mongoose.Schema({
     title: { type: String, required: true },
 
-    // 歌曲ID列表
+    // list of songs
     songList: { type: Array },
-
-    // 专辑风格标签
-    styleLabel: { type: Array },
-
-    // 专辑情感偏向
-    emotionLabel: { type: Array },
-
-    authorType: {
-        type: String,
-        default: authorType.USER,
-    },
 
     authorID: {
         type: mongoose.Schema.Types.ObjectId,
     },
 
-	// 创建日期
+    // creating time
 	createTime: {
         type: Date, default: Date.now
     },
 
-    // 更新日期
+    // last time of updating
 	updateTime: {
         type: Date, default: Date.now
     },

@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+
     password: {
         type: String,
         required: true,
@@ -17,41 +18,49 @@ const userSchema = new mongoose.Schema({
             .update(argv.auth_default_password || 'root')
             .digest('hex')
     },
+
     email: {
         type: String,
         required: true,
         validate: /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/
     },
 
-    // 用户类型
+    // type of user
     type: {
-        type: Number,
+        type: String,
         required: true,
         default: USER_TYPE.USER
     },
-    // 关注的用户ID
-    following: { type: Array, },
-    // 粉丝ID
+
+    // users _id following
+    following: { type: [mongoose.Schema.Types.ObjectId] },
+
+    // fans _id
     followers: { type: Array, },
-    // 歌曲_id收藏
+
+    // songs _id collected
     collections: { type: Array, },
-    // 文章
+
+    // articles _id
     articles: { type: Array, },
-    // 喜好风格标签
-    styleLabel: { type: Array, },
-    // 情感偏向标签
-    emotionLabel: { type: Array, },
-    // 头像文件名称
+
+    // image path of avatar
     avatar: {
         type: String,
         default: 'default_avatar.png'
     },
-	// 创建日期
-	createTime: {
-        type: Date, default: Date.now
+
+    // register time
+    createTime: {
+        type: Date,
+        default: Date.now
     },
-    // 最后更新时间
-	udpateTime: { type: Date, default: Date.now },
+
+    // last time of updating
+    udpateTime: {
+        type: Date,
+        default: Date.now
+    },
 })
 
 module.exports = mongoose.model('User', userSchema)

@@ -1,5 +1,5 @@
 /**
- * Normalize a port into a number, string, or false.
+ * @description: Normalize a port into a number, string, or false.
  */
 exports.normalizePort = (val) => {
     const port = parseInt(val, 10);
@@ -17,7 +17,9 @@ exports.normalizePort = (val) => {
     return false;
 }
 
-// covert timestamp to 2018-12-12 12:12:00
+/**
+ * @description: covert timestamp to 2018-12-12 12:12:00
+ */ 
 exports.timestampToTime = (timestamp) => {
     const date = new Date(timestamp);
     const Y = date.getFullYear() + '-';
