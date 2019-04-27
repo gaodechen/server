@@ -1,32 +1,43 @@
 const { mongoose } = require('../lib/mongodb')
 
 const musicSchema = new mongoose.Schema({
-    musicName: { type: String, required: true },
+    // title of music
+    title: {
+        type: String,
+        required: true
+    },
 
-    musicSrc: { type: String },
+    // filepath of music
+    src: { type: String },
 
-    // 歌词
-    lyric: { type: String },
+    // author
+    author: {
+        type: Array,
+    },
 
-    // 封面图
-    imgSrc: { type: String },
+    // lyrics
+    lyric: {
+        type: String
+    },
 
-    // 风格标签
-    styleLabel: { type: Array },
+    // thumbnail of music
+    thumbnail: {
+        type: String,
+        default: 'default_thumbnail.png',
+    },
 
-    // 情感标签
-    emotionLabel: { type: Array },
+    // begining time of refrain
+    refrainBeginingTime: { type: String },
 
-    climaxAt: { type: String },
+    // end time of refrain
+    refrainEndTime: { type: Number },
 
-    climaxTime: { type: Number },
-
-	// 创建日期
+	// creation time
 	createTime: {
         type: Date, default: Date.now
     },
 
-    // 更新日期
+    // time last updated
 	updateTime: {
         type: Date, default: Date.now
     },

@@ -2,7 +2,7 @@ const { responseClient } = require('../utils')
 const { HTTP_CODE, HTTP_MSG } = require('../constants')
 
 /**
- * @description: verify if session is null
+ * @description verify if session is null
  */
 exports.isNull = (req, res, next) => {
     if (req.session.userInfo) {
@@ -14,7 +14,7 @@ exports.isNull = (req, res, next) => {
 }
 
 /**
- * @description: check if session is not null
+ * @description check if session is not null
  */
 exports.isNotNull = (req, res, next) => {
     if (!req.session.userInfo) {
@@ -25,7 +25,7 @@ exports.isNotNull = (req, res, next) => {
 }
 
 /**
- * @description: check if user information fields are not empty
+ * @description check if user information fields are not empty
  */
 exports.isInfoNotNull = (req, res, next) => {
     let { email, password } = req.body;
@@ -41,7 +41,7 @@ exports.isInfoNotNull = (req, res, next) => {
 }
 
 /**
- * @description: log in
+ * @description log in
  */
 exports.post = (userInfo, req, res, next) => {
     req.session.userInfo = userInfo;
@@ -49,7 +49,7 @@ exports.post = (userInfo, req, res, next) => {
 }
 
 /**
- * @description: get session
+ * @description get session
  */
 exports.get = (req, res) => {
     if(req.session.userInfo) {
@@ -60,10 +60,10 @@ exports.get = (req, res) => {
 }
 
 /**
- * @description: delete session
+ * @description delete session
  */
 exports.del = (req, res) => {
     // delete session
     req.session.userInfo = null;
-    responseClient(res, HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.DELETE);
+    responseClient(res, HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.LOGOUT);
 };

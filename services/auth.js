@@ -5,7 +5,8 @@ const { HTTP_CODE, HTTP_MSG } = require('../constants')
 /**
  * @description check email & password in database
  * @param {*} userInfo
- * @returns promise.resolve() / promise.reject()
+ * @returns promise.resolve([code, msg, data of user])
+ *          or promise.reject([code, msg])
  */
 exports.verify = async function (userInfo) {
     let { email, password } = userInfo;

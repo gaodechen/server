@@ -24,6 +24,7 @@ exports.HTTP_MSG = {
         DELETE: '删除成功',
         POST: '添加成功',
         UPDATE: '更新成功',
+        REGISTER: '注册成功',
         LOGIN: '登陆成功',
         LOGOUT: '注销成功',
         FOUND: '查询成功',

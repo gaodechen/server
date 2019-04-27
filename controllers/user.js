@@ -3,7 +3,7 @@ const { HTTP_CODE, HTTP_MSG } = require('../constants')
 const { responseClient } = require('../utils')
 
 /**
- * @description: check if fields needed are filled in correctly
+ * @description check if fields needed are filled in correctly
  */
 exports.isNotNull = (req, res, next) => {
     let { email, username, password } = req.body;
@@ -22,7 +22,7 @@ exports.isNotNull = (req, res, next) => {
 }
 
 /**
- * @description: get user by _id
+ * @description get user by _id
  */
 exports.get = (req, res) => {
     let { _id } = req.query;
@@ -36,7 +36,7 @@ exports.get = (req, res) => {
 }
 
 /**
- * @description: add user & register
+ * @description add user & register
  */
 exports.post = (req, res) => {
     let userInfo = { email, username, password, avatar } = req.body;
@@ -50,7 +50,7 @@ exports.post = (req, res) => {
 };
 
 /**
- * @description: delete user by email
+ * @description delete user by email
  */
 exports.del = (req, res) => {
     let { email } = req.body;
@@ -65,11 +65,12 @@ exports.del = (req, res) => {
 
 
 /**
- * @description: update userinfo
+ * @description update userinfo
  */
 exports.put = (req, res) => {
-    let userInfo = { email, username, password, avatar } = req.body;
-    user.update(userInfo)
+    let email = { email } = req.body;
+    let userInfo = { username, password, avatar } = req.body;
+    user.updateByEmail(email, userInfo)
         .then((packet) => {
             responseClient(res, ...packet);
         })

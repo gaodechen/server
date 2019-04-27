@@ -1,24 +1,34 @@
 const { mongoose } = require('../lib/mongodb')
 
 const articleSchema = new mongoose.Schema({
-    title: { type: String, required: true },
+    title: {
+        type: String,
+        required: true,
+    },
 
-    content: { type: String },
+    content: {
+        type: String,
+    },
+
+    playlist: {
+        type: Array,
+    },
 
     authorID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        required: true,
     },
 
-    // 更新时间
+    // time created
 	createTime: {
-        type: Date, default: Date.now
+        type: Date,
+        default: Date.now,
     },
 
-    // 更新时间
+    // time last updated
 	updateTime: {
-        type: Date, default: Date.now
+        type: Date,
+        default: Date.now,
     },
 })
 

@@ -3,9 +3,10 @@ const { MD5_encode } = require('../utils')
 const { USER_TYPE, HTTP_CODE, HTTP_MSG } = require('../constants')
 
 /**
- * @description: find user in database by _id
+ * @description find user in database by _id
  * @param {ObjectId} _id
- * @returns: Promise.resolve(packet) / Promise.reject(packet)
+ * @returns: Promise.resolve([code, msg, data of user found])
+ *           or Promise.reject([code, msg])
  */
 exports.findById = async (_id) => {
     return await User.findOne({ _id })
@@ -22,9 +23,10 @@ exports.findById = async (_id) => {
 }
 
 /**
- * @description: add user to database
+ * @description add user to database
  * @param {*} ...userInfo
- * @returns: Promise.resolve(packet) / Promise.reject(packet)
+ * @returns: Promise.resolve([code, msg, data of user])
+ *           or Promise.reject([code, msg])
  */
 exports.register = async (userInfo) => {
     const { email, username, password, avatar } = userInfo;
@@ -40,7 +42,7 @@ exports.register = async (userInfo) => {
             }
         })
         .then((data) => {
-            return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.POST, data];
+            return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.REGISTER, data];
         })
         .catch((error) => {
             throw error;
@@ -48,9 +50,10 @@ exports.register = async (userInfo) => {
 }
 
 /**
- * @description: delete user from database
+ * @description delete user from database
  * @param {string} email
- * @returns: Promise.resolve(packet) / Promise.reject(packet)
+ * @returns: Promise.resolve([code, msg])
+ *           or Promise.reject([code, msg])
  */
 exports.deleteByEmail = async (email) => {
     return await User.deleteOne({ email })
@@ -67,15 +70,15 @@ exports.deleteByEmail = async (email) => {
 }
 
 /**
- * @description: update userinfo in database
+ * @description update userinfo in database
  * @param {*} ...userinfo
- * @returns: Promise.resolve(packet) / Promise.reject(packet)
+ * @returns: Promise.resolve([code, msg])
+ *           or Promise.reject([code, msg])
  */
-exports.update = async (userInfo) => {
-    let { email, username, password, avatar } = userInfo;
-    return await User.findOneAndUpdate({ email }, { username, password, avatar })
+exports.updateByEmail = async (email, userInfo) => {
+    return await User.findOneAndUpdate({ email }, { ...userInfo })
         .then(result => {
-            return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.UPDATE]
+            return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.UPDATE];
         })
         .catch(error => {
             throw error;

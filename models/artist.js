@@ -1,22 +1,17 @@
 const { mongoose } = require('../lib/mongodb')
 
 const artistSchema = new mongoose.Schema({
-    artistName: {
+    // name of artist
+    name: {
         type: String,
         required: true
     },
 
-    // 创作风格标签
-    styleLabel: {
+    compositionList: {
         type: Array,
     },
 
-    // 创作情感标签
-    emotionLabel: {
-        type: Array,
-    },
-
-    // 头像文件名称
+    // filepath of avatar
     avatar: {
         type: String,
         default: 'default_avatar.png'

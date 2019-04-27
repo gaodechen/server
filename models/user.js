@@ -38,6 +38,9 @@ const userSchema = new mongoose.Schema({
     // fans _id
     followers: { type: Array, },
 
+    // an array of articles list
+    articles: { type: Array },
+
     // songs _id collected
     collections: { type: Array, },
 
@@ -50,13 +53,13 @@ const userSchema = new mongoose.Schema({
         default: 'default_avatar.png'
     },
 
-    // register time
+    // creation time of account
     createTime: {
         type: Date,
         default: Date.now
     },
 
-    // last time of updating
+    // last time updated
     udpateTime: {
         type: Date,
         default: Date.now

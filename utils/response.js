@@ -1,7 +1,7 @@
 const { HTTP_CODE, HTTP_MSG } = require('../constants')
 
 /**
- * @description: set response for client
+ * @description set response for client
  */
 exports.responseClient = (res, httpCode = HTTP_CODE.SERVER_ERROR, message = HTTP_MSG.SERVER_ERROR, data = {}) => {
     let resData = {};
