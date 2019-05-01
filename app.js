@@ -8,7 +8,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
-const config = require('./config/config')
+
+const { cors } = require('./middlewares/cors')
 
 // initialize mongodb and redis
 require('./lib/redis');
@@ -39,14 +40,14 @@ app.use(
 );
 
 app.use((req, res, next) => {
-	// allowed origin address & port
-	res.setHeader('Access-Control-Allow-Origin', config.FRONT_SERVER);
 	// allow request with cookie
 	res.setHeader('Access-Control-Allow-Credentials', true);
-	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 	res.setHeader('Access-Control-Allow-Headers', 'Content-type, X-Requested-With');
 	next();
 });
+
+app.use(cors())
 
 // router
 require('./routes/') (app);

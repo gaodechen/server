@@ -29,6 +29,7 @@ exports.HTTP_MSG = {
         LOGOUT: '注销成功',
         FOUND: '查询成功',
         DEFAULT: '请求成功',
+        UPLOAD: '上传成功',
     },
 
     FIELDS_EMPTY: {
@@ -39,6 +40,7 @@ exports.HTTP_MSG = {
     },
 
     REQUEST_FAILED: {
+        UPLOAD_FAILED: '上传失败',
         USERINFO_ERROR: '用户信息有误',
         ALREADY_EXISTS: '已经存在',
         DEFAULT: '请求失败',
@@ -54,3 +56,10 @@ exports.HTTP_MSG = {
 
     SERVER_ERROR: '服务器错误',
 }
+
+// upload modes
+exports.UPLOAD_MODE = {
+    SINGLE: 'single',
+    ARRAY: 'array',
+    ANY: "any"
+};

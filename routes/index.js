@@ -67,5 +67,5 @@ module.exports = app => {
 
 	// routes for uploader
 	app.route('/file')
-		.post()
+		.post(file.post)
 };

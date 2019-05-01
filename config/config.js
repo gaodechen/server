@@ -1,15 +1,12 @@
 const { argv } = require('yargs');
 
-// host address
-exports.HOST = 'http:/127.0.0.1';
-// ports of front & static server
-exports.FRONT_SERVER_PORT = '3001';
-exports.STATIC_SERVER_PORT = '3002';
+// address of front end server
+exports.FRONT_END_HOST = 'http://localhost:3001'
+// address of nginx forwarding port
+exports.FORWARDING_HOST = 'http://localhost:4534'
 
-// address of front server
-exports.FRONT_SERVER = 'http://127.0.0.1:3001/'
 // address of static server
-exports.STATIC_SERVER = 'http://127.0.0.1:3002/'
+exports.STATIC_SERVER = 'http://localhost:3002'
 
 exports.PORT = process.env.PORT || '3000'
 
