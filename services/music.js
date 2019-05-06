@@ -9,7 +9,6 @@ const { HTTP_CODE, HTTP_MSG } = require('../constants')
  */
 exports.post = async (musicInfo) => {
     let music = new Music({ ...musicInfo });
-    // 尝试插入数据库
     return await music.save()
         .then(data => {
             return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.POST, data];

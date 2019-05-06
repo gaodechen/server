@@ -44,6 +44,9 @@ const userSchema = new mongoose.Schema({
     // songs _id collected
     collections: { type: Array, },
 
+    // preferred style of music
+    preference: { type: Array, },
+
     // articles _id
     articles: { type: Array, },
 

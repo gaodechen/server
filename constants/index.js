@@ -21,13 +21,16 @@ exports.HTTP_CODE = {
 // HTTP messages
 exports.HTTP_MSG = {
     SUCCESS: {
-        DELETE: '删除成功',
+        GET: '获取成功',
         POST: '添加成功',
+        DELETE: '删除成功',
         UPDATE: '更新成功',
         REGISTER: '注册成功',
         LOGIN: '登陆成功',
         LOGOUT: '注销成功',
         FOUND: '查询成功',
+        RECOMMEND: '推荐成功',
+        COLLECT: '收藏成功',
         DEFAULT: '请求成功',
         UPLOAD: '上传成功',
     },

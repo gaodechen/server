@@ -1,17 +1,18 @@
-const recommender = require('../lib/recommender')
 const { responseClient } = require('../utils')
+const rec = require('../services/recommend')
 
-// _id: 为用户_id进行乐曲推荐
-// _recNum: 推荐乐曲的数量
+/**
+ * @description give recommendations of recType [music or article] for user _id
+ * @param {*} req
+ * @param {*} res
+ */
 exports.get = (req, res) => {
-    const { _id, recNum, recType } = req.query;
-
-    // recommender[recType]
-    recommender.recommendFor(_id, recNum)
-        .then(recs => {
-            responseClient(res, 200, '返回推荐列表', recs)
+    const payload = { _id, recNum, recType } = req.query;
+    rec.recommend(payload)
+        .then(packet => {
+            responseClient(res, ...packet);
         })
-        .catch(err => {
-            responseClient(res);
+        .catch(error => {
+            responseClient(res, ...error);
         })
 }

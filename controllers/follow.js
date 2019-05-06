@@ -1,90 +1,61 @@
-const mongoose = require('mongoose')
-const User = require('../models/user');
 const { responseClient } = require('../utils')
+const { HTTP_CODE, HTTP_MSG } = require('../constants')
+const follow = require('../services/follow')
 
-// 添加粉丝需要的权限
+/**
+ * Currying Functions
+ * (listName) => (req, res) => { services... }
+ */
+
+/**
+ * @description auth to add followers
+ */
 exports.hasAuth = (req, res, next) => {
-    if(req.session.userInfo._id === req.body.followID) {
+    if (req.session.userInfo._id === req.body.followId) {
         next();
     } else {
-        responseClient(res, 403, '操作没有权限');
-        return;
+        responseClient(res, HTTP_CODE.AUTH_ERROR, HTTP_MSG.AUTH_ERROR.NOT_AUTHED);
     }
 }
 
-// schema当中存储id，查询时返回对应id的附加fields
+/**
+ * @description get follow[listName] by _id
+ */
 exports.get = (listName) => (req, res) => {
     let { _id } = req.query;
-    User.findOne({ _id })
-        .then(userInfo => {
-            if (userInfo) {
-                // 获取_id之外的fields
-                let list = userInfo[listName];
-                // 获取ObjectID list
-                let idList = list.map(item => (
-                    new mongoose.Types.ObjectId(item)
-                ));
-                // list当中的元素一起查询获取array
-                User.find({ _id: { $in: idList } })
-                    // array中所有结果的promsie.resolve
-                    .then(infoList => {
-                        responseClient(res, 200, '返回' + listName + '列表', infoList.map(item => (
-                            { _id: item._id, username: item.username }
-                        )));
-                    })
-            } else {
-                responseClient(res, 404, '用户不存在')
-            }
+    follow.findById(listName)(_id)
+        .then(packet => {
+            responseClient(res, ...packet);
         })
-        .catch(err => {
-            responseClient(res, 400, '查询失败', err);
-        });
+        .catch(error => {
+            responseClient(res, ...error);
+        })
 }
 
-// 为_id的listName添加元素
+/**
+ * @description post followId to follow[listName] of user _id
+ */
 exports.post = (listName) => (req, res) => {
-    let { _id, followID } = req.body;
-    // addToSet去重
-    User.findOneAndUpdate({ _id }, { $addToSet: { [listName]: followID } })
-        .then(userInfo => {
-            // _id用户存在
-            if (userInfo) {
-                let field = userInfo[listName];
-                // followID用户不存在
-                if (field.indexOf(followID) === -1) {
-                    field.push(followID)
-                    responseClient(res, 200, '添加成功', field)
-                } else {
-                    responseClient(res, 400, '用户已存在', field)
-                }
-            } else {
-                responseClient(res, 404, '用户不存在')
-            }
+    let { _id, followId } = req.body;
+    follow.post(listName)(_id, followId)
+        .then(packet => {
+            responseClient(res, ...packet);
         })
-        .catch(err => {
-            responseClient(res);
-        });
+        .catch(error => {
+            responseClient(res, ...error);
+        })
 };
 
+/**
+ * @description delete followId in follow[listName] of user _id
+ */
 exports.del = (listName) => (req, res) => {
-    let { _id, followID } = req.body;
-    // 更新User[_id]的列表字段
-    User.findOneAndUpdate({ _id }, { $pull: { [listName]: followID } })
-        // _id用户存在
-        .then(userInfo => {
-            // followID用户存在
-            if (userInfo) {
-                let field = userInfo[listName];
-                if (field.indexOf(followID) !== -1) {
-                    responseClient(res, 200, '删除成功', field)
-                } else {
-                    responseClient(res, 404, '用户不存在')
-                }
-            } else {
-                responseClient(res, 404, '用户不存在')
-            }
+    let { _id, followId } = req.body;
+    follow.deleteById(listName)(_id, followId)
+        .then(packet => {
+            responseClient(res, ...packet);
         })
-        .catch(err => {
-            responseClient(res);
-        });
+        .catch(error => {
+            responseClient(res, ...error);
+        })
 }

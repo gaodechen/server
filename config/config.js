@@ -24,10 +24,8 @@ exports.REDIS = {
 	RDS_OPTS: {},
 }
 
-// 推荐系统 配置
-exports.RECOMMENDER = {
-	// 推送的类别
-	className: 'music',
-	// 参与计量的相似用户数量
-	nearestNeighbors: 20,
-}
+// Recommender config creator
+exports.RECOMMENDER_CREATOR = (className, nearestNeighbors) => ({
+	className,
+	nearestNeighbors,
+})
