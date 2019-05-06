@@ -2,48 +2,43 @@ const { responseClient } = require('../utils')
 const collection = require('../services/collection')
 
 /**
- * @description get user collection list
- * @param {*} req
- * @param {*} res
+ * @description get collection[likedType] by _id
  */
 exports.get = (req, res) => {
-    const { _id } = req.query;
-    collection.getCollection(_id)
+    let { _id, likedType } = req.body;
+    collection.findById(likedType)(_id)
         .then(packet => {
-            responseClient(res, ...packet)
+            responseClient(res, ...packet);
         })
         .catch(error => {
-            responseClient(res, ...error)
+            responseClient(res, ...error);
         })
 }
 
 /**
- * @description add music id to user collection, both mongodb & redis
- * @param {*} req
- * @param {*} res
+ * @description post collectionId to collection[likedType] of user _id
  */
 exports.post = (req, res) => {
-    const { _id, likedId } = req.body;
-    collection.addToCollection(_id, likedId)
+    let { _id, collectionId, likedType } = req.body;
+    collection.post(likedType)(_id, collectionId)
         .then(packet => {
-            responseClient(res, ...packet)
+            responseClient(res, ...packet);
         })
         .catch(error => {
-            responseClient(res, ...error)
+            responseClient(res, ...error);
         })
-}
+};
 
-exports.put = (req, res) => {
-    const { _id, likedList } = req.body;
-    User.findOneAndUpdate({_id}, {collections: likedList})
-        .then(data => {
-            if(data) {
-                responseClient(res, 200, '喜好更新成功');
-            } else {
-                responseClient(res, 404, '用户不存在');
-            }
+/**
+ * @description delete collectionId in collection[likedType] of user _id
+ */
+exports.del = (req, res) => {
+    let { _id, collectionId, likedType } = req.body;
+    collection.deleteById(likedType)(_id, collectionId)
+        .then(packet => {
+            responseClient(res, ...packet);
         })
-        .catch(err => {
-            responseClient(res);
+        .catch(error => {
+            responseClient(res, ...error);
         })
 }

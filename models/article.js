@@ -14,7 +14,7 @@ const articleSchema = new mongoose.Schema({
         type: Array,
     },
 
-    authorID: {
+    authorId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
     },

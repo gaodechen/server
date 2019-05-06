@@ -1,4 +1,5 @@
 const Music = require('../models/music');
+const User = require('../models/user');
 const { HTTP_CODE, HTTP_MSG } = require('../constants')
 
 /**
@@ -61,8 +62,14 @@ exports.deleteById = async (_id) => {
         })
 }
 
-exports.putById = async (_id, musicInfo) => {
-    return await Music.findOneAndUpdate({ _id }, { ...musicInfo })
+/**
+ * @description update by _id & payload object
+ * @param {ObjectId} _id
+ * @param {object} payload
+ * @returns
+ */
+exports.updateById = async (_id, payload) => {
+    return await Music.findOneAndUpdate({ _id }, payload)
         .then(result => {
             return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.UPDATE]
         })
@@ -70,4 +77,22 @@ exports.putById = async (_id, musicInfo) => {
             throw [];
         })
 
+}
+
+/**
+ * @description get music list of userId
+ * @param {*} userId
+ */
+exports.getListByUserId = async (userId) => {
+    return await User.findOne({ _id: userId })
+        .then(data => {
+            if (data) {
+                return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.GET, data.composition]
+            } else {
+                return [HTTP_CODE.NOT_FOUND, HTTP_MSG.NOT_FOUND];
+            }
+        })
+        .catch(error => {
+            throw [];
+        })
 }

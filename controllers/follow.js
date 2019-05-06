@@ -22,7 +22,7 @@ exports.hasAuth = (req, res, next) => {
  * @description get follow[listName] by _id
  */
 exports.get = (listName) => (req, res) => {
-    let { _id } = req.query;
+    let { _id } = req.body;
     follow.findById(listName)(_id)
         .then(packet => {
             responseClient(res, ...packet);

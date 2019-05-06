@@ -9,10 +9,10 @@ const { USER_TYPE, HTTP_CODE, HTTP_MSG } = require('../constants')
  *           or Promise.reject([code, msg])
  */
 exports.findById = async (_id) => {
-    return await User.findOne({ _id })
+    return await User.findById(_id)
         .then(data => {
             if (data) {
-                return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS, data];
+                return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.FOUND, data];
             } else {
                 throw [HTTP_CODE.NOT_FOUND, HTTP_MSG.NOT_FOUND];
             }

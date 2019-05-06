@@ -4,24 +4,29 @@ const auth = require('../controllers/auth')
 const music = require('../controllers/music')
 const follow = require('../controllers/follow')
 const article = require('../controllers/article')
+const recommend = require('../controllers/recommend')
+const collection = require('../controllers/collection')
 const file = require('../controllers/file')
 
 /**
- * API
- * @description routes based on sources
+ * @description resource-oriented API
+ *  			Router configuration
+ * @example		app.route(routePath)
+ *			   .method([...middlewares])
+ * @param {*} app
  */
-
 module.exports = app => {
 	// session
 	app.route('/session')
-		// get session
+		// get userInfo
 		.get(session.get)
 		// login
 		.post(session.isNull, session.isInfoNotNull, auth.verify, session.post)
+		// update userInfo in session
+		.put(session.isNotNull, user.putWithSession)
 		// logout
 		.delete(session.isNotNull, session.del)
 
-	// routes for /user
 	app.route('/user')
 		.get(session.isNotNull, auth.isSelf, user.get)
 		// register
@@ -43,8 +48,14 @@ module.exports = app => {
 		.get(music.get)
 		// add music
 		.post(session.isNotNull, music.post)
+		// update music
+		.put(session.isNotNull, auth.isSelf, )
 		// delete music
 		.delete(session.isNotNull, auth.isAdmin, music.del)
+	
+	// get music list
+	app.route('/musicList')
+		.get(music.getList)
 
 	// routes for /following
 	app.route('/following')
@@ -57,6 +68,16 @@ module.exports = app => {
 		.get(follow.get("followers"))
 		.post(session.isNotNull, follow.hasAuth, follow.post("followers"))
 		.delete(session.isNotNull, auth.isSelf, follow.del("followers"))
+	
+	// routes for /collection
+	app.route('/collection')
+		.get(collection.get)
+		.post(session.isNotNull, auth.isSelf, collection.post)
+		.delete(session.isNotNull, auth.isSelf, collection.del)
+	
+	// routes for /recommend
+	app.route('/recommend')
+		.get(recommend.get)
 
 	// routes for /article
 	app.route('/article')
@@ -64,6 +85,10 @@ module.exports = app => {
 		.post(session.isNotNull, auth.isSelf, article.post)
 		.put(session.isNotNull, auth.isSelf, article.put)
 		.delete(session.isNotNull, auth.isSelf, article.del)
+
+	// get article list
+	app.route('/articleList')
+		.get(article.getList)
 
 	// routes for uploader
 	app.route('/file')

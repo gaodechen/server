@@ -10,6 +10,7 @@ const logger = require('morgan');
 const session = require('express-session');
 
 const { cors } = require('./middlewares/cors')
+const { timeout, timeoutHalter } = require('./middlewares/timeout')
 
 // initialize mongodb and redis
 require('./lib/redis');
@@ -20,6 +21,11 @@ const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+
+// request timeout
+app.use(timeout(60 * 1000));
+app.use(timeoutHalter)
 
 // middlewares
 app.use(logger('dev'));

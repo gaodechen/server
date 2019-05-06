@@ -1,4 +1,4 @@
-const recommender = require('../lib/recommender')
+const { recommender } = require('../lib/recommender')
 const { HTTP_CODE, HTTP_MSG } = require('../constants')
 
 /**
@@ -10,7 +10,7 @@ const { HTTP_CODE, HTTP_MSG } = require('../constants')
  */
 exports.recommend = async (payload) => {
     const { _id, recNum, recType } = payload;
-    return await recommender.recommendFor(_id, recNum)
+    return await recommender[recType].recommendFor(_id, recNum)
         .then(recs => {
             return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.RECOMMEND, recs];
         })
@@ -18,5 +18,3 @@ exports.recommend = async (payload) => {
             return [];
         })
 }
-
-exports.like

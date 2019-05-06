@@ -1,4 +1,5 @@
 const user = require('../services/user')
+const auth = require('../services/auth')
 const { HTTP_CODE, HTTP_MSG } = require('../constants')
 const { responseClient } = require('../utils')
 
@@ -25,7 +26,7 @@ exports.isNotNull = (req, res, next) => {
  * @description get user by _id
  */
 exports.get = (req, res) => {
-    let { _id } = req.query;
+    let { _id } = req.body;
     user.findById(_id)
         .then((packet) => {
             responseClient(res, ...packet);
@@ -76,5 +77,19 @@ exports.put = (req, res) => {
         })
         .catch((error) => {
             responseClient(res, ...error)
+        })
+}
+
+/**
+ * @description udpate userInfo field in session
+ * @param {*} req
+ * @param {*} res
+ */
+exports.putWithSession = (req, res) => {
+    let { _id } = req.session.userInfo;
+    user.findById(_id)
+        .then(packet => {
+            Object.assign(req.session.userInfo, { ...packet });
+            responseClient(res, ...packet)
         })
 }
