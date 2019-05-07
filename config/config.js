@@ -1,12 +1,20 @@
 const { argv } = require('yargs');
 
-// address of front end server
-exports.FRONT_END_HOST = 'http://localhost:3001'
-// address of nginx forwarding port
-exports.FORWARDING_HOST = 'http://localhost:4534'
-// address for system test server
-exports.TEST_HOST_LIST = ['http://47.111.178.254']
-// exports.TEST_HOST_LIST = ['http://223.99.16.69']
+if (process.env.NODE_ENV === 'production') {
+	// address of front end server
+	exports.FRONT_END_HOST = 'http://localhost:3001'
+	// address of nginx forwarding port
+	exports.FORWARDING_HOST = 'http://localhost:4534'
+	// address for system test server
+	exports.TEST_HOST_LIST = 'http://localhost'
+} else {
+	// address of front end server
+	exports.FRONT_END_HOST = 'http://localhost:3001'
+	// address of nginx forwarding port
+	exports.FORWARDING_HOST = 'http://47.111.165.214:4534'
+	// address for system test server
+	exports.TEST_HOST_LIST = 'http://47.111.178.254'
+}
 
 // address of static server
 exports.STATIC_SERVER = 'http://localhost:3002'

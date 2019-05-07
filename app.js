@@ -4,6 +4,7 @@
 
 const createError = require('http-errors');
 const express = require('express');
+const compression = require('compression')
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -26,6 +27,7 @@ app.set('view engine', 'ejs');
 // request timeout
 app.use(timeout(60 * 1000));
 app.use(timeoutHalter)
+app.use(compression())
 
 // middlewares
 app.use(logger('dev'));
