@@ -8,12 +8,12 @@ exports.TEST_HOST_LIST = 'http://47.111.178.254'
 exports.STATIC_SERVER = 'http://47.111.165.214:3002'
 // MongoDB config
 exports.MONGODB = {
-    uri: 'musicine.mongodb.rds.aliyuncs.com:27017/musicine',
+    uri: 'mongodb://musicine.mongodb.rds.aliyuncs.com:3717/musicine',
     username: 'MongoDB',
     password: 'Anseek_2019',
 };
 
-const RDS_PORT = 3717
+const RDS_PORT = 6379
 const RDS_HOST = 'musicine.redis.rds.aliyuncs.com'
 
 // Redis config

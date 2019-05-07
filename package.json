@@ -4,7 +4,7 @@
   "description": "Server",
   "scripts": {
     "start": "set NODE_ENV='development' && node ./bin/www",
-    "build": "set NODE_ENV='production' && node ./bin/www"
+    "build": "set NODE_ENV='production' && pm2 start -i ./bin/www 0"
   },
   "dependencies": {
     "babel-preset-env": "^1.7.0",
