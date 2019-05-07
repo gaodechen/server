@@ -1,5 +1,4 @@
 const crypto = require('crypto')
-const { argv } = require('yargs')
 const { mongoose } = require('../lib/mongodb')
 
 const USER_TYPE = require('../constants')
@@ -15,7 +14,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: crypto
             .createHash('md5')
-            .update(argv.auth_default_password || 'root')
+            .update('root')
             .digest('hex')
     },
 
