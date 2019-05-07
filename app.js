@@ -8,10 +8,10 @@ const compression = require('compression')
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const session = require('express-session');
 
 const { cors } = require('./middlewares/cors')
 const { timeout, timeoutHalter } = require('./middlewares/timeout')
+const session = require('./middlewares/session')
 
 // initialize mongodb and redis
 require('./lib/redis');
@@ -35,17 +35,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser('musicine_server_cookie'));
-app.use(
-	session({
-		secret: 'musicine_server_cookie',
-		// cookie key in browser
-		name: 'session_id',
-		resave: true,
-		saveUninitialized: true,
-		// cookit time limit
-		cookie: { maxAge: 60 * 1000 * 30, httpOnly: true },
-	}),
-);
+// session redis storage config
+app.use(session());
 
 app.use((req, res, next) => {
 	// allow request with cookie
