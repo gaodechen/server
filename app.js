@@ -8,10 +8,12 @@ const compression = require('compression')
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const session = require('express-session');
+const sessionStore = require('connect-redis')(session)
 
 const { cors } = require('./middlewares/cors')
 const { timeout, timeoutHalter } = require('./middlewares/timeout')
-const session = require('./middlewares/session')
+const { SESSION_STORAGE } = require('./config')
 
 // initialize mongodb and redis
 require('./lib/redis');
@@ -19,15 +21,16 @@ require('./lib/mongodb');
 
 const app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-
 // request timeout
 app.use(timeout(60 * 1000));
 app.use(timeoutHalter)
+
+// gzip
 app.use(compression())
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 // middlewares
 app.use(logger('dev'));
@@ -35,8 +38,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser('musicine_server_cookie'));
-// session redis storage config
-app.use(session());
+// session redis storage
+app.use(
+	session({
+		secret: 'musicine_server_cookie',
+		// cookie key in browser
+		name: 'session_id',
+		// update cookie after each request
+		resave: true,
+		saveUninitialized: true,
+		// available time for cookie
+		cookie: { maxAge: 60 * 1000 * 30, httpOnly: true },
+	}),
+);
 
 app.use((req, res, next) => {
 	// allow request with cookie
@@ -49,7 +63,7 @@ app.use((req, res, next) => {
 app.use(cors())
 
 // router
-require('./routes/') (app);
+require('./routes/')(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

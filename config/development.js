@@ -3,7 +3,7 @@ exports.FRONT_END_HOST = 'http://localhost:3001'
 // address of nginx forwarding port
 exports.FORWARDING_HOST = 'http://localhost:4534'
 // address for system test server
-exports.TEST_HOST_LIST = 'http://localhost'
+exports.TEST_HOST = 'http://localhost'
 // address of static server
 exports.STATIC_SERVER = 'http://localhost:3002'
 // MongoDB config
@@ -25,6 +25,6 @@ exports.REDIS = {
 
 exports.SESSION_STORAGE = {
 	port: RDS_PORT,
-	hostname: RDS_HOST,
+	host: RDS_HOST,
 	db: 55,
 }

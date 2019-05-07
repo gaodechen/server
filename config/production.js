@@ -25,6 +25,6 @@ exports.REDIS = {
 
 exports.SESSION_STORAGE = {
 	port: RDS_PORT,
-	hostname: RDS_HOST,
+	host: RDS_HOST,
 	db: 55,
 }
