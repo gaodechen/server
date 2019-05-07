@@ -3,7 +3,7 @@ const config = require('../config/config')
 
 // whitelist for CORS domain
 const corsOptions = {
-	origin: [config.FRONT_END_HOST, config.FORWARDING_HOST]
+	origin: [config.FRONT_END_HOST, config.FORWARDING_HOST, config.TEST_HOST]
 }
 
 /**
