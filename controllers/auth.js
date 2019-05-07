@@ -32,8 +32,12 @@ exports.isAdmin = (req, res, next) => {
  * @description check if the given user has auth to operate
  */
 exports.isSelf = (req, res, next) => {
-    const { type, email } = req.session.userInfo;
-    if (type != USER_TYPE.ADMIN && email != req.body.email) {
+    const { type, _id } = req.session.userInfo;
+    let id;
+    if (req.body.authorId) id = req.body.authorId;
+    else if (req.body.userId) id = req.body.userId;
+    else if (req.body._id) id = _id;
+    if (type != USER_TYPE.ADMIN && id != req.body._id) {
         responseClient(res, HTTP_CODE.AUTH_ERROR, HTTP_MSG.AUTH_ERROR.NOT_AUTHED);
     } else {
         next();

@@ -29,10 +29,12 @@ exports.findById = (likedType) => async (_id) => {
 }
 
 /** 
- * @description add collectionId to collection list of user _id
+ * @description add collectionId to collection list of user _id in database
+ *              and mark item with "like" in real-time recommendation system
  * @returns [httpCode, httpMsg, data]
  */
 exports.post = (likedType) => async (_id, collectionId) => {
+    // articleCollection -> article
     return await User.findByIdAndUpdate(_id, {
         // addToSet
         $addToSet: { [likedType]: collectionId }
@@ -42,12 +44,17 @@ exports.post = (likedType) => async (_id, collectionId) => {
                 let field = userInfo[likedType];
                 // collectionId not exists yet
                 if (field && field.indexOf(collectionId) === -1) {
-                    let recType = 'music'
-                    if (likedType === 'article') recType = article;
-                    let payload = { _id: userInfo._id, likedId: collectionId, recType }
+                    // payload for recommender updating
+                    let className = likedType.substring(0, likedType.length - 10);
+                    let payload = {
+                        _id: userInfo._id.toString(),
+                        likedId: collectionId,
+                        recType: className
+                    }
                     // insert collectionId to list
                     field.push(collectionId)
-                    return new Promise({field, payload});
+                    recommender.liked(payload)
+                    return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.COLLECT, field];
                 } else {
                     return [HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ALREADY_EXISTS]
                 }
@@ -55,10 +62,6 @@ exports.post = (likedType) => async (_id, collectionId) => {
                 throw [HTTP_CODE.NOT_FOUND, HTTP_MSG.NOT_FOUND]
             }
         })
-        .then(packet => {
-            return {dirty: recommender.liked(packet.payload), field};
-        })
-        .then()
         .catch(error => {
             throw error;
         });
@@ -74,6 +77,13 @@ exports.deleteById = (likedType) => async (_id, collectionId) => {
                 let field = userInfo[likedType];
                 // collectionId exists
                 if (field.indexOf(collectionId) !== -1) {
+                    let className = likedType.substring(0, likedType.length - 10);
+                    let payload = {
+                        _id: userInfo._id.toString(),
+                        likedId: collectionId,
+                        recType: className,
+                    }
+                    recommender.unliked(payload);
                     return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.DELETE, field]
                 } else {
                     throw [HTTP_CODE.NOT_FOUND, HTTP_MSG.NOT_FOUND]
