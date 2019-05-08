@@ -9,8 +9,6 @@ exports.STATIC_SERVER = 'http://47.111.165.214:3002'
 // MongoDB config
 exports.MONGODB = {
     uri: 'mongodb://musicine.mongodb.rds.aliyuncs.com:3717/musicine',
-    username: 'MongoDB',
-    password: 'Anseek_2019',
 };
 
 const RDS_PORT = 6379

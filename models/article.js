@@ -23,6 +23,7 @@ const articleSchema = new mongoose.Schema({
 	createTime: {
         type: Date,
         default: Date.now,
+        index: true,
     },
 
     // time last updated

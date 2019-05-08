@@ -6,7 +6,8 @@ const USER_TYPE = require('../constants')
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
-        required: true
+        required: true,
+        index: true,
     },
 
     password: {
