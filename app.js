@@ -26,10 +26,6 @@ app.use(timeoutHalter)
 // gzip
 app.use(compression())
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
 // middlewares
 app.use(logger('dev'));
 app.use(express.json());
