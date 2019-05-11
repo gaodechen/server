@@ -1,12 +1,18 @@
 const session = require('express-session');
-// const sessionStore = require('connect-redis')(session)
-// const redis = require('redis')
-// const { REDIS } = require('../config')
+const sessionStore = require('connect-redis')(session)
+const redis = require('redis')
+const { REDIS } = require('../config')
 
-// const redisSession = require('node-redis-session');
+console.log(REDIS)
 
 module.exports = () => {
 	return session({
+		// store session in redis
+		/* store: new sessionStore({
+			host: REDIS.RDS_HOST,
+			port: REDIS.RDS_PORT,
+			db: 55,
+		}), */
 		secret: 'musicine_server_cookie',
 		// cookie key in browser
 		name: 'session_id',

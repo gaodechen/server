@@ -45,6 +45,7 @@ exports.HTTP_MSG = {
     REQUEST_FAILED: {
         UPLOAD_FAILED: '上传失败',
         USERINFO_ERROR: '用户信息有误',
+        ARGV_ERROR: '参数有误',
         ALREADY_EXISTS: '已经存在',
         DEFAULT: '请求失败',
     },

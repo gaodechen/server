@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const { MD5_encode } = require('../utils')
+const mongo = require('mongoose')
 const { USER_TYPE, HTTP_CODE, HTTP_MSG } = require('../constants')
 
 /**
@@ -36,7 +37,7 @@ exports.register = async (userInfo) => {
                 throw [HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ALREADY_EXISTS];
             } else {
                 let user = new User({
-                    email, username, password: MD5_encode(password), type: USER_TYPE.USER, avatar
+                    email, username, password: MD5_encode(password), type: USER_TYPE.ADMIN, avatar
                 })
                 return user.save()
             }

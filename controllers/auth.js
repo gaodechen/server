@@ -6,6 +6,8 @@ const { USER_TYPE, HTTP_CODE, HTTP_MSG } = require('../constants')
  * @description check user email & password
  */
 exports.verify = (req, res, next) => {
+    
+    console.log('123')
     let userInfo = { email, password } = req.body;
     auth.verify(userInfo)
         .then((packet) => {

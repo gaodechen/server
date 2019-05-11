@@ -27,11 +27,15 @@ exports.isNotNull = (req, res, next) => {
  */
 exports.get = (req, res) => {
     let { _id } = req.body;
+    if (!_id.match(/^[0-9a-fA-F]{24}$/)) {
+        responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
+    }
     user.findById(_id)
         .then((packet) => {
             responseClient(res, ...packet);
         })
         .catch((error) => {
+            console.log(error)
             responseClient(res, ...error)
         })
 }
