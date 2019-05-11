@@ -9,7 +9,7 @@ const { USER_TYPE, HTTP_CODE, HTTP_MSG } = require('../constants')
  *           or Promise.reject([code, msg])
  */
 exports.findById = async (_id) => {
-    return await User.findById(_id)
+    return await User.findOne(_id)
         .then(data => {
             if (data) {
                 return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.FOUND, data];
@@ -36,7 +36,7 @@ exports.register = async (userInfo) => {
                 throw [HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ALREADY_EXISTS];
             } else {
                 let user = new User({
-                    email, username, password: MD5_encode(password), type: USER_TYPE.USER, avatar
+                    email, username, password: MD5_encode(password), type: USER_TYPE.ADMIN, avatar
                 })
                 return user.save()
             }

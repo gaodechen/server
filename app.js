@@ -9,6 +9,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
+const sessionStore = require('connect-redis')(session)
+const { REDIS } = require('./config/config.js')
 
 const { cors } = require('./middlewares/cors')
 const { timeout, timeoutHalter } = require('./middlewares/timeout')
@@ -37,6 +39,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser('musicine_server_cookie'));
 app.use(
 	session({
+		store: new sessionStore({
+			host: REDIS.RDS_HOST,
+			port: REDIS.RDS_PORT,
+			db: 55,
+		}),
 		secret: 'musicine_server_cookie',
 		// cookie key in browser
 		name: 'session_id',

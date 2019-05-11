@@ -34,7 +34,8 @@ const musicSchema = new mongoose.Schema({
 
 	// creation time
 	createTime: {
-        type: Date, default: Date.now
+        type: Date, default: Date.now,
+index: true,
     },
 
     // time last updated

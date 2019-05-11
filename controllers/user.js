@@ -28,10 +28,10 @@ exports.isNotNull = (req, res, next) => {
 exports.get = (req, res) => {
     let { _id } = req.body;
     user.findById(_id)
-        .then((packet) => {
+        .then(packet => {
             responseClient(res, ...packet);
         })
-        .catch((error) => {
+        .catch(error => {
             responseClient(res, ...error)
         })
 }

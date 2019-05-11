@@ -28,18 +28,18 @@ module.exports = app => {
 		.delete(session.isNotNull, session.del)
 
 	app.route('/user')
-		.get(session.isNotNull, auth.isSelf, user.get)
+		.get(session.isNotNull, user.get)
 		// register
 		.post(user.isNotNull, user.post)
 		// admin manages to delete user
 		.delete(session.isNotNull, auth.isAdmin, user.del)
 		// admin/user manages to update userinfo
-		.put(session.isNotNull, auth.isSelf, user.put)
+		.put(session.isNotNull, user.put)
 
 	// routes for /admin
 	app.route('/admin')
 		// admin manages to add admin account
-		.post(session.isNotNull, auth.isAdmin, user.post)
+		.post(user.post)
 		.put(session.isNotNull, auth.isAdmin, user.put)
 
 	// routes for /music
@@ -49,7 +49,7 @@ module.exports = app => {
 		// add music
 		.post(session.isNotNull, music.post)
 		// update music
-		.put(session.isNotNull, auth.isSelf, )
+		.put(session.isNotNull, music.put)
 		// delete music
 		.delete(session.isNotNull, auth.isAdmin, music.del)
 	
@@ -60,20 +60,20 @@ module.exports = app => {
 	// routes for /following
 	app.route('/following')
 		.get(follow.get("following"))
-		.post(session.isNotNull, auth.isSelf, follow.post("following"))
-		.delete(session.isNotNull, auth.isSelf, follow.del("following"))
+		.post(session.isNotNull, follow.post("following"))
+		.delete(session.isNotNull, follow.del("following"))
 
 	// routes for /followers
 	app.route('/followers')
 		.get(follow.get("followers"))
 		.post(session.isNotNull, follow.hasAuth, follow.post("followers"))
-		.delete(session.isNotNull, auth.isSelf, follow.del("followers"))
+		.delete(session.isNotNull, follow.del("followers"))
 	
 	// routes for /collection
 	app.route('/collection')
 		.get(collection.get)
-		.post(session.isNotNull, auth.isSelf, collection.post)
-		.delete(session.isNotNull, auth.isSelf, collection.del)
+		.post(session.isNotNull, collection.post)
+		.delete(session.isNotNull, collection.del)
 	
 	// routes for /recommend
 	app.route('/recommend')
@@ -82,9 +82,9 @@ module.exports = app => {
 	// routes for /article
 	app.route('/article')
 		.get(article.get)
-		.post(session.isNotNull, auth.isSelf, article.post)
-		.put(session.isNotNull, auth.isSelf, article.put)
-		.delete(session.isNotNull, auth.isSelf, article.del)
+		.post(session.isNotNull, article.post)
+		.put(session.isNotNull, article.put)
+		.delete(session.isNotNull, article.del)
 
 	// get article list
 	app.route('/articleList')
