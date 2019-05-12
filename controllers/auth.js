@@ -1,13 +1,12 @@
 const auth = require('../services/auth')
-const { getPacketData, responseClient } = require('../utils')
+const { getPacketData, responseClient, testId } = require('../utils')
 const { USER_TYPE, HTTP_CODE, HTTP_MSG } = require('../constants')
 
 /**
  * @description check user email & password
  */
 exports.verify = (req, res, next) => {
-    
-    console.log('123')
+
     let userInfo = { email, password } = req.body;
     auth.verify(userInfo)
         .then((packet) => {
@@ -31,17 +30,19 @@ exports.isAdmin = (req, res, next) => {
 }
 
 /**
- * @description check if the given user has auth to operate
+ * @description check if the given user with given id field has auth to operate
+ * @params field: name of _id field
  */
-exports.isSelf = (req, res, next) => {
-    const { type, _id } = req.session.userInfo;
-    let id;
-    if (req.body.authorId) id = req.body.authorId;
-    else if (req.body.userId) id = req.body.userId;
-    else if (req.body._id) id = _id;
-    if (type != USER_TYPE.ADMIN && id != req.body._id) {
-        responseClient(res, HTTP_CODE.AUTH_ERROR, HTTP_MSG.AUTH_ERROR.NOT_AUTHED);
+exports.isSelf = (field = "_id") => (req, res, next) => {
+    const { type, currentId } = req.session.userInfo;
+    if (req.body && req.body[field]) {
+        const requestId = req.body[field];
+        if (type != USER_TYPE.ADMIN && currentId !== requestId) {
+            responseClient(res, HTTP_CODE.AUTH_ERROR, HTTP_MSG.AUTH_ERROR.NOT_AUTHED);
+        } else {
+            next();
+        }
     } else {
-        next();
+        reponseClient(res, HTTP_CODE.AUTH_ERROR, HTTP_MSG.AUTH_ERROR.NOT_AUTHED)
     }
 }

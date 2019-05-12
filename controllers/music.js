@@ -1,5 +1,5 @@
 const music = require('../services/music')
-const { responseClient } = require('../utils')
+const { responseClient, testId } = require('../utils')
 const { HTTP_CODE, HTTP_MSG } = require('../constants')
 
 /**
@@ -7,7 +7,10 @@ const { HTTP_CODE, HTTP_MSG } = require('../constants')
  */
 exports.post = (req, res) => {
     let musicInfo = { title, src, lyric, authorId, thumbnail, refrainBeginingTime, refrainEndTime, createTime, updateTime, } = req.body;
-    if(!title || !src || !authorId) {
+    if (!testId(authorId)) {
+        responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
+    }
+    if(!title || !src) {
         responseClient(res, HTTP_CODE.FIELDS_EMPTY, HTTP_MSG.FIELDS_EMPTY.DEFAULT);
     }
     music.post(musicInfo)
@@ -24,6 +27,9 @@ exports.post = (req, res) => {
  */
 exports.get = (req, res) => {
     let { _id } = req.body;
+    if (!testId(_id)) {
+        responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
+    }
     music.findById(_id)
         .then((packet) => {
             responseClient(res, ...packet)
@@ -38,6 +44,9 @@ exports.get = (req, res) => {
  */
 exports.del = (req, res) => {
     let { _id } = req.body;
+    if (!testId(_id)) {
+        responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
+    }
     music.deleteById(_id)
         .then((packet) => {
             responseClient(res, ...packet);
@@ -54,6 +63,9 @@ exports.del = (req, res) => {
  */
 exports.put = (req, res) => {
     let _id = { _id } = req.body;
+    if (!testId(_id)) {
+        responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
+    }
     let musicInfo = { title, src, lyric, thumbnail, refrainBeginingTime, refrainEndTime, createTime, updateTime,  } = req.body;
     music.updateById(_id, musicInfo)
         .then((packet) => {
@@ -71,6 +83,9 @@ exports.put = (req, res) => {
  */
 exports.getList = (req, res) => {
     let { userId } = req.body;
+    if (!testId(userId)) {
+        responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
+    }
     music.getListByUserId(userId)
         .then((packet) => {
             responseClient(res, ...packet);

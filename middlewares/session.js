@@ -3,8 +3,6 @@ const sessionStore = require('connect-redis')(session)
 const redis = require('redis')
 const { REDIS } = require('../config')
 
-console.log(REDIS)
-
 module.exports = () => {
 	return session({
 		// store session in redis

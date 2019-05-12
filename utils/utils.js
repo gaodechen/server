@@ -17,6 +17,10 @@ exports.normalizePort = (val) => {
     return false;
 }
 
+exports.testId = (_id) => {
+    return _id.match(/^[0-9a-fA-F]{24}$/);
+}
+
 /**
  * @description covert timestamp to 2018-12-12 12:12:00
  */ 

@@ -1,7 +1,7 @@
 const user = require('../services/user')
 const auth = require('../services/auth')
 const { HTTP_CODE, HTTP_MSG } = require('../constants')
-const { responseClient } = require('../utils')
+const { responseClient, testId } = require('../utils')
 
 /**
  * @description check if fields needed are filled in correctly
@@ -27,7 +27,7 @@ exports.isNotNull = (req, res, next) => {
  */
 exports.get = (req, res) => {
     let { _id } = req.body;
-    if (!_id.match(/^[0-9a-fA-F]{24}$/)) {
+    if (!testId(_id)) {
         responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
     }
     user.findById(_id)
@@ -91,6 +91,9 @@ exports.put = (req, res) => {
  */
 exports.putWithSession = (req, res) => {
     let { _id } = req.session.userInfo;
+    if (!testId(_id)) {
+        responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
+    }
     user.findById(_id)
         .then(packet => {
             Object.assign(req.session.userInfo, { ...packet });

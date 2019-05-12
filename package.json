@@ -4,7 +4,7 @@
   "description": "Server",
   "scripts": {
     "start": "set NODE_ENV='development' && node-dev ./bin/www",
-    "build": "export NODE_ENV='production' && pm2 start ./bin/www -i 0"
+    "build": "export NODE_ENV='production' && pm2 start ./bin/www --nouse-idle-notification -i 0"
   },
   "dependencies": {
     "babel-preset-env": "^1.7.0",

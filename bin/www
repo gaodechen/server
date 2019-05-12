@@ -13,6 +13,8 @@ const port = normalizePort(config.PORT);
 app.set('port', port);
 const server = http.createServer(app);
 
+http.globalAgent.maxSockets = Infinity;
+
 server.listen(port, () => {
     const host = server.address().address
     const port = server.address().port

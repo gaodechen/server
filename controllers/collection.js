@@ -1,4 +1,4 @@
-const { responseClient } = require('../utils')
+const { responseClient, testId } = require('../utils')
 const collection = require('../services/collection')
 
 /**
@@ -6,6 +6,9 @@ const collection = require('../services/collection')
  */
 exports.get = (req, res) => {
     let { _id, likedType } = req.body;
+    if (!testId(_id)) {
+        responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
+    }
     collection.findById(likedType)(_id)
         .then(packet => {
             responseClient(res, ...packet);
@@ -20,6 +23,9 @@ exports.get = (req, res) => {
  */
 exports.post = (req, res) => {
     let { _id, collectionId, likedType } = req.body;
+    if (!testId(_id)) {
+        responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
+    }
     collection.post(likedType)(_id, collectionId)
         .then(packet => {
             responseClient(res, ...packet);
@@ -34,6 +40,9 @@ exports.post = (req, res) => {
  */
 exports.del = (req, res) => {
     let { _id, collectionId, likedType } = req.body;
+    if (!testId(_id)) {
+        responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
+    }
     collection.deleteById(likedType)(_id, collectionId)
         .then(packet => {
             responseClient(res, ...packet);
