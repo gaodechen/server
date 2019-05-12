@@ -9,9 +9,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const session = require('./middlewares/session')
 const { cors } = require('./middlewares/cors')
 const { timeout, timeoutHalter } = require('./middlewares/timeout')
-const session = require('./middlewares/session')
 
 // initialize mongodb and redis
 require('./lib/redis');
