@@ -1,15 +1,7 @@
 const commonConfig = require('./common')
+const productionConfig = require('./production')
 
-if (process.env.NODE_ENV == 'production') {
-	const productionConfig = require('./production')
-	module.exports = {
-		...commonConfig,
-		...productionConfig,
-	}
-} else {
-	const developmentConfig = require('./development')
-	module.exports = {
-		...commonConfig,
-		...developmentConfig,
-	}
+module.exports = {
+	...commonConfig,
+	...productionConfig,
 }
