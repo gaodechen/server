@@ -13,7 +13,7 @@ exports.MONGODB = {
     password: 'DB_password',
 };
 
-const RDS_PORT = 6379
+const RDS_PORT = '6379'
 const RDS_HOST = '127.0.0.1'
 
 // Redis config

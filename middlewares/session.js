@@ -16,6 +16,6 @@ module.exports = () => {
 		resave: false,
 		saveUninitialized: false,
 		// cookit time limit
-		cookie: { maxAge: 60 * 1000 * 30, httpOnly: true },
+		cookie: { maxAge: 60 * 1000 * 30 },
 	})
 }

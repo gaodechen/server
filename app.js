@@ -7,7 +7,6 @@ const express = require('express');
 const compression = require('compression')
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
 
 const session = require('./middlewares/session')
 const { cors } = require('./middlewares/cors')
@@ -30,14 +29,14 @@ app.use(timeoutHalter)
 app.use(compression())
 
 // middlewares
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser('musicine_server_cookie'));
 // session redis storage
 app.use(session());
-
+// set header
 app.use((req, res, next) => {
 	// allow request with cookie
 	res.setHeader('Access-Control-Allow-Credentials', true);

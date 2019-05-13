@@ -5,7 +5,6 @@ const { HTTP_CODE, HTTP_MSG } = require('../constants')
  * @description verify if session is null
  */
 exports.isNull = (req, res, next) => {
-    console.log(req.session)
     if (req.session && req.session.userInfo) {
         // if already logged in
         responseClient(res, HTTP_CODE.AUTH_ERROR, HTTP_MSG.AUTH_ERROR.LOGGED_IN);
@@ -45,9 +44,11 @@ exports.isInfoNotNull = (req, res, next) => {
  * @description log in
  */
 exports.post = (userInfo, req, res, next) => {
-    req.session = {};
-    req.session.userInfo = userInfo;
-    console.log(req.session)
+    if(!req.session) {
+        req.session = { userInfo };
+    } else {
+        req.session.userInfo = userInfo;
+    }
     responseClient(res, HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.LOGIN, userInfo);
 }
 
