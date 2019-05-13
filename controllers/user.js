@@ -35,7 +35,6 @@ exports.get = (req, res) => {
             responseClient(res, ...packet);
         })
         .catch((error) => {
-            console.log(error)
             responseClient(res, ...error)
         })
 }

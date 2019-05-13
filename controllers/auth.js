@@ -33,15 +33,15 @@ exports.isAdmin = (req, res, next) => {
  * @params field: name of _id field
  */
 exports.isSelf = (field = "_id") => (req, res, next) => {
-    const { type, currentId } = req.session.userInfo;
+    const { type, _id } = req.session.userInfo;
     if (req.body && req.body[field]) {
         const requestId = req.body[field];
-        if (type != USER_TYPE.ADMIN && currentId !== requestId) {
+        if (type != USER_TYPE.ADMIN && _id !== requestId) {
             responseClient(res, HTTP_CODE.AUTH_ERROR, HTTP_MSG.AUTH_ERROR.NOT_AUTHED);
         } else {
             next();
         }
     } else {
-        reponseClient(res, HTTP_CODE.AUTH_ERROR, HTTP_MSG.AUTH_ERROR.NOT_AUTHED)
+        responseClient(res, HTTP_CODE.AUTH_ERROR, HTTP_MSG.AUTH_ERROR.NOT_AUTHED)
     }
 }
