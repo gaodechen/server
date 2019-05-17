@@ -8,15 +8,11 @@ const { HTTP_CODE, HTTP_MSG } = require('../constants')
  * @param {*} res
  */
 exports.get = (req, res) => {
-    const { _id, recNum, recType } = req.body;
-    if (!testId(_id)) {
-        responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
-    }
-    const payload = { _id, recNum, recType};
+    const { _id, recType, recNum } = req.body;
     if(!recNum || !recType) {
         responseClient(res, HTTP_CODE.FIELDS_EMPTY, HTTP_MSG.FIELDS_EMPTY.DEFAULT)
     }
-    rec.recommend(payload)
+    rec.recommend({_id, recType, recNum})
         .then(packet => {
             responseClient(res, ...packet);
         })

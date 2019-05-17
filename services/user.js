@@ -76,10 +76,11 @@ exports.deleteByEmail = async (email) => {
  * @returns: Promise.resolve([code, msg])
  *           or Promise.reject([code, msg])
  */
-exports.updateByEmail = async (email, userInfo) => {
-    return await User.findOneAndUpdate({ email }, { ...userInfo })
+exports.updateById = async (_id, userInfo) => {
+    const payload = { ...userInfo };
+    return await User.findOneAndUpdate({ _id }, payload)
         .then(result => {
-            return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.UPDATE];
+            return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.UPDATE, result];
         })
         .catch(error => {
             throw error;

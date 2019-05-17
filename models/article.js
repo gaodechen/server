@@ -32,4 +32,6 @@ const articleSchema = new mongoose.Schema({
     },
 })
 
+articleSchema.set('autoIndex', false)
+
 module.exports = mongoose.model('Article', articleSchema)

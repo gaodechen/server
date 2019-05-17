@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Article = require('../models/article');
 const User = require('../models/user')
 const { HTTP_CODE, HTTP_MSG } = require('../constants')
@@ -87,12 +88,25 @@ exports.findById = async (_id) => {
  */
 exports.getListByUserId = async (userId) => {
     return await User.findById(userId)
-        .then(data => {
-            if (data) {
-                return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.GET, data.articles]
+        .then(userInfo => {
+            if (userInfo) {
+                // list of article _id
+                let list = userInfo.articles;
+                // covert to ObjectId
+                let idList = list.map(item => (
+                    mongoose.Types.ObjectId(item)
+                ));
+                return Article.find({_id: { $in: idList }});
             } else {
                 return [HTTP_CODE.NOT_FOUND, HTTP_MSG.NOT_FOUND];
             }
+        })
+        .then(articleList => {
+            return [
+                HTTP_CODE.SUCCESS,
+                HTTP_MSG.SUCCESS.GET,
+                articleList
+            ]
         })
         .catch(error => {
             throw [];

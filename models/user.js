@@ -21,7 +21,13 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
+        // for email queries
+        index: true,
         validate: /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/
+    },
+
+    description: {
+        type: String,
     },
 
     // type of user
@@ -74,6 +80,7 @@ const userSchema = new mongoose.Schema({
     },
 })
 
+userSchema.set('autoIndex', false);
 userSchema.index({_id: 1, email: 1});
 
 module.exports = mongoose.model('User', userSchema)

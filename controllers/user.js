@@ -1,7 +1,6 @@
 const user = require('../services/user')
-const auth = require('../services/auth')
 const { HTTP_CODE, HTTP_MSG } = require('../constants')
-const { responseClient, testId } = require('../utils')
+const { responseClient, testId, MD5_encode } = require('../utils')
 
 /**
  * @description check if fields needed are filled in correctly
@@ -43,7 +42,8 @@ exports.get = (req, res) => {
  * @description add user & register
  */
 exports.post = (req, res) => {
-    let userInfo = { email, username, password, avatar } = req.body;
+    let { email, username, password, avatar } = req.body;
+    let userInfo = { email, username, password, avatar };
     user.register(userInfo)
         .then((packet) => {
             responseClient(res, ...packet)
@@ -72,9 +72,18 @@ exports.del = (req, res) => {
  * @description update userinfo
  */
 exports.put = (req, res) => {
-    let email = { email } = req.body;
-    let userInfo = { username, password, avatar } = req.body;
-    user.updateByEmail(email, userInfo)
+    let { _id, username, password, description, avatar } = req.body;
+    let args = { _id, username, password, description, avatar };
+    let payload = {};
+    Object.keys(args).forEach(key => {
+        if(args[key] && typeof(args[key]) !== 'undefined') {
+            payload[key] = args[key];
+        }
+    })
+    if (password && typeof(password) !== 'undefined') {
+        payload.password = MD5_encode(password);
+    }
+    user.updateById(_id, payload)
         .then((packet) => {
             responseClient(res, ...packet);
         })

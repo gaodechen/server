@@ -27,10 +27,10 @@ const musicSchema = new mongoose.Schema({
     },
 
     // begining time of refrain
-    refrainBeginingTime: { type: String },
+    refBegin: { type: Number },
 
     // end time of refrain
-    refrainEndTime: { type: Number },
+    refEnd: { type: Number },
 
 	// creation time
 	createTime: {
@@ -42,5 +42,7 @@ const musicSchema = new mongoose.Schema({
         type: Date, default: Date.now
     },
 })
+
+musicSchema.set('autoIndex', false);
 
 module.exports = mongoose.model('Music', musicSchema)

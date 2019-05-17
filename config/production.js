@@ -14,7 +14,7 @@ const MG_SET = [
 	'musicine3.mongodb.rds.aliyuncs.com:3717',
 ]
 const MONGODB = {
-	uri: 'mongodb://' + MG_SET.map(e => e) + '/musicine?replicaSet=mgset-14966795&readPreference=secondaryPreferred',
+	uri: 'mongodb://' + MG_SET.map(e => e) + '/musicine?replicaSet=mgset-14966795&readPreference=secondaryPreferred&w=majority',
 };
 
 exports.MONGODB = MONGODB;

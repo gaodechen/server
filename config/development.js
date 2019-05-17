@@ -1,7 +1,7 @@
 // address of front end server
 exports.FRONT_END_HOST = 'http://localhost:3001'
 // address of nginx forwarding port
-exports.FORWARDING_HOST = 'http://localhost:4534'
+exports.FORWARDING_HOST = 'http://localhost:4500'
 // address for system test server
 exports.TEST_HOST = 'http://localhost'
 // address of static server

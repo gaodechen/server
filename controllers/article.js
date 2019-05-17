@@ -84,11 +84,11 @@ exports.get = (req, res) => {
  * @param {*} res
  */
 exports.getList = (req, res) => {
-    let { userId } = req.body;
-    if (!testId(userId)) {
+    let { authorId } = req.body;
+    if (authorId && !testId(authorId)) {
         responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
     }
-    article.getListByUserId(userId)
+    article.getListByUserId(authorId)
         .then(packet => {
             responseClient(res, ...packet);
         })

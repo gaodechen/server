@@ -18,12 +18,13 @@ exports.normalizePort = (val) => {
 }
 
 exports.testId = (_id) => {
+    if (!_id) return false;
     return _id.match(/^[0-9a-fA-F]{24}$/);
 }
 
 /**
  * @description covert timestamp to 2018-12-12 12:12:00
- */ 
+ */
 exports.timestampToTime = (timestamp) => {
     const date = new Date(timestamp);
     const Y = date.getFullYear() + '-';

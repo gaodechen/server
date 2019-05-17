@@ -47,7 +47,7 @@ module.exports = app => {
 		// get music information
 		.get(music.get)
 		// add music
-		.post(session.isNotNull, music.post)
+		.post(music.post)
 		// update music
 		.put(session.isNotNull, auth.isSelf("authorId"), music.put)
 		// delete music

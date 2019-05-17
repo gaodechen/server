@@ -10,6 +10,15 @@ const { HTTP_CODE, HTTP_MSG } = require('../constants')
  */
 exports.recommend = async (payload) => {
     const { _id, recNum, recType } = payload;
+    if (!_id) {
+        return await recommender["music"].recommendFor(0, 8)
+            .then(recs => {
+                return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.RECOMMEND, recs];
+            })
+            .catch(error => {
+                return [];
+            })
+    }
     return await recommender[recType].recommendFor(_id, recNum)
         .then(recs => {
             return [HTTP_CODE.SUCCESS, HTTP_MSG.SUCCESS.RECOMMEND, recs];

@@ -6,10 +6,10 @@ const { HTTP_CODE, HTTP_MSG } = require('../constants')
  * @description post music with musicInfo
  */
 exports.post = (req, res) => {
-    let musicInfo = { title, src, lyric, authorId, thumbnail, refrainBeginingTime, refrainEndTime, createTime, updateTime, } = req.body;
-    if (!testId(authorId)) {
+    let musicInfo = { title, src, lyric, authorId, thumbnail, refBegin, refEnd, createTime, updateTime, } = req.body;
+    /* if (!testId(authorId)) {
         responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
-    }
+    } */
     if(!title || !src) {
         responseClient(res, HTTP_CODE.FIELDS_EMPTY, HTTP_MSG.FIELDS_EMPTY.DEFAULT);
     }
@@ -66,7 +66,7 @@ exports.put = (req, res) => {
     if (!testId(_id)) {
         responseClient(res, HTTP_CODE.REQUEST_FAILED, HTTP_MSG.REQUEST_FAILED.ARGV_ERROR)
     }
-    let musicInfo = { title, src, lyric, thumbnail, refrainBeginingTime, refrainEndTime, createTime, updateTime,  } = req.body;
+    let musicInfo = { title, src, lyric, thumbnail, refBegin, refEnd, createTime, updateTime,  } = req.body;
     music.updateById(_id, musicInfo)
         .then((packet) => {
             responseClient(res, ...packet);
